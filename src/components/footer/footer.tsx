@@ -2,7 +2,7 @@ import { EnvelopeIcon } from "@heroicons/react/24/solid";
 
 export default function Footer() {
   return (
-    <div className="w-screen h-32 bg-slate-900 text-center flex flex-col justify-center">
+    <div className="w-screen h-32 bg-slate-900 text-center flex flex-col justify-center bg-opacity-70">
       <p className="text-white text-xl">&copy; GYMTRACK 2023. </p>
       <div className="flex flex-row justify-center space-x-2">
         <a href="mailto:matijafric@gmail.com">

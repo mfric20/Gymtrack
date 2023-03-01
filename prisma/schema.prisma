@@ -1,0 +1,65 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:../baza.db"
+}
+
+model korisnik {
+  id                Int                 @id @unique(map: "sqlite_autoindex_korisnik_1") @default(autoincrement())
+  ime               String
+  prezime           String
+  email             String              @unique(map: "sqlite_autoindex_korisnik_2")
+  lozinka           String
+  aktiviran         Int                 @default(0)
+  aktivacijski_kod  Int
+  korisnik_teretana korisnik_teretana[]
+  korisnik_termin   korisnik_termin[]
+}
+
+model korisnik_teretana {
+  korisnik_id Int
+  teretana_id Int
+  uloga_id    Int?
+  uloga       uloga?   @relation(fields: [uloga_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  korisnik    korisnik @relation(fields: [korisnik_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  teretana    teretana @relation(fields: [teretana_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([korisnik_id, teretana_id])
+}
+
+model korisnik_termin {
+  korisnik_id Int
+  termin_id   Int
+  termin      termin   @relation(fields: [termin_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  korisnik    korisnik @relation(fields: [korisnik_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([korisnik_id, termin_id])
+}
+
+model teretana {
+  id                Int                 @id @unique(map: "sqlite_autoindex_teretana_1") @default(autoincrement())
+  naziv             String
+  adresa            String
+  slika             String?
+  korisnik_teretana korisnik_teretana[]
+  termin            termin[]
+}
+
+model termin {
+  id              Int               @id @unique(map: "sqlite_autoindex_termin_1") @default(autoincrement())
+  pocetak         String
+  kraj            String
+  maksimalan_broj Int
+  teretana_id     Int
+  korisnik_termin korisnik_termin[]
+  teretana        teretana          @relation(fields: [teretana_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model uloga {
+  id                Int                 @id @unique(map: "sqlite_autoindex_uloga_1") @default(autoincrement())
+  naziv             String
+  korisnik_teretana korisnik_teretana[]
+}
