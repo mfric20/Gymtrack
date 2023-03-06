@@ -18,6 +18,7 @@ export default function Registration() {
   const [emailError, setEmailError] = useState<boolean>(false);
   const [lozinkaError, setLozinkaError] = useState<boolean>(false);
   const [pLozinkaError, setPLozinkaError] = useState<boolean>(false);
+  const [emailExists, setEmailExists] = useState<boolean>(false);
 
   const provijeriMail = new RegExp(
     "^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$"
@@ -55,7 +56,7 @@ export default function Registration() {
       ime.length > 0 &&
       prezime.length > 0
     ) {
-      const res = await axios
+      await axios
         .post(
           "/api/register",
           {
@@ -71,11 +72,14 @@ export default function Registration() {
             },
           }
         )
-        .then(async () => {
-          router.push("/activation");
+        .then((res) => {
+          const data: { message?: string; error?: string; id?: number } =
+            res.data;
+          router.push("/activation/" + data.id);
         })
         .catch((error) => {
           console.log(`Došlo je do pogreške! | Poruka: ${error}`);
+          setEmailExists(true);
         });
     }
   };
@@ -146,6 +150,13 @@ export default function Registration() {
             ) : (
               <div className="text-red-600 text-sm">
                 Email adresa nije važeća!
+              </div>
+            )}
+            {!emailExists ? (
+              ""
+            ) : (
+              <div className="text-red-600 text-sm">
+                Već postoji korisnik sa ovom email adresom!
               </div>
             )}
           </div>

@@ -1,11 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { PrismaClient } from "@prisma/client";
-import bcrypt from "bcrypt";
 import { mailOptions, transporter } from "@/services/nodemailer";
+import bcrypt from "bcrypt";
+import NextCors from "nextjs-cors";
 
 type Data = {
   error?: string;
   message?: string;
+  id?: number;
 };
 
 const prisma = new PrismaClient();
@@ -14,6 +16,12 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
+  await NextCors(req, res, {
+    methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
+    origin: "*",
+    optionsSuccessStatus: 200,
+  });
+
   if (req.method === "POST") {
     try {
       console.info("API zahtjev za registraciju novog korisnika!");
@@ -38,17 +46,18 @@ export default async function handler(
         to: email,
         subject: "Aktivacijski kod",
         text: "This is test string",
-        html: `<h1>Aktivacijski kod </h2> <p>Vaš aktivacijski kod je: ${activationCode} </p>`,
+        html: `<h1>Aktivacijski kod </h2> <p style="font-size:18px;font-weight:normal">Hvala Vam na registraciji, kako bi nastavili sa prijavom Vaš aktivacijski kod je: ${activationCode}. </p>`,
       });
 
-      res.status(100).json({ message: "Kreiran je novi korisnik!" });
+      return res
+        .status(200)
+        .json({ message: "Kreiran je novi korisnik!", id: dbResponse.id });
     } catch (error) {
       console.error(
         `Greška kod API zahtjeva za registraciju novog korisnika | Poruka ${error}`
       );
-      res.status(400).json({
-        error:
-          "`Greška kod API zahtjeva za registraciju novog korisnika | Poruka ${error}`",
+      return res.status(400).json({
+        error: `Greška kod API zahtjeva za registraciju novog korisnika | Poruka ${error}`,
       });
     }
   }
