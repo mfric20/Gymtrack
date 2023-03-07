@@ -28,7 +28,7 @@ export default async function handler(
       const { ime, prezime, email, lozinka } = req.body;
 
       const hash = await bcrypt.hash(lozinka, 12);
-      const activationCode = Math.floor(Math.random() * 999999) + 100000;
+      const activationCode = Math.floor(Math.random() * 900000) + 100000;
 
       const dbResponse = await prisma.korisnik.create({
         data: {
