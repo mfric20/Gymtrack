@@ -1,5 +1,6 @@
 import { Shantell_Sans } from "next/font/google";
 import { useRouter } from "next/router";
+import { signOut } from "next-auth/react";
 
 const shantell_sans = Shantell_Sans({ subsets: ["latin"] });
 
@@ -16,15 +17,9 @@ export default function LoggedOutNavigation() {
       <div className="flex flex-row space-x-6 items-center">
         <button
           className="font-semibold text-white border-0 hover:border-0 hover:underline h-10"
-          onClick={() => router.push("/login")}
+          onClick={() => signOut({ callbackUrl: "http://localhost:3000" })}
         >
-          Prijavi se
-        </button>
-        <button
-          className="bg-green-600 text-white p-2 pr-4 pl-4 rounded-lg hover:bg-green-500 h-10 shadow-lg"
-          onClick={() => router.push("/register")}
-        >
-          Registriraj se
+          Odjava
         </button>
       </div>
     </div>

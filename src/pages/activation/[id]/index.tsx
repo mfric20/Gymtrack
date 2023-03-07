@@ -31,8 +31,8 @@ export default function Activation() {
       .then((res) => {
         router.push("/login");
       })
-      .catch((res) => {
-        console.log(`Došlo je do pogreške! | Poruka: ${res}`);
+      .catch((error) => {
+        console.log(`Došlo je do pogreške! | Poruka: ${error}`);
         setWrongCodeLabel(true);
       });
   };

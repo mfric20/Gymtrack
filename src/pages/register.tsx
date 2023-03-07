@@ -2,13 +2,13 @@ import { Shantell_Sans } from "next/font/google";
 import { ArrowLongLeftIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { useSession, signIn, getProviders } from "next-auth/react";
 import axios from "axios";
 
 const shantell_sans = Shantell_Sans({ subsets: ["latin"] });
 
 export default function Registration() {
   const router = useRouter();
+
   const [ime, setIme] = useState<string>("");
   const [prezime, setPrezime] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -23,21 +23,6 @@ export default function Registration() {
   const provijeriMail = new RegExp(
     "^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$"
   );
-
-  const loginUser = async () => {
-    const res = await signIn("credentials", {
-      ime: ime,
-      prezime: prezime,
-      email: email,
-      lozinka: lozinka,
-      redirect: false,
-      callbackUrl: `${window.location.origin}`,
-    });
-
-    if (res?.error) {
-      console.log(res?.error);
-    } else router.push("/dashboard");
-  };
 
   const handleOnSubmit = async () => {
     if (!provijeriMail.test(email)) setEmailError(true);

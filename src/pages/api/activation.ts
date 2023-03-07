@@ -31,7 +31,6 @@ export default async function handler(
         },
       });
 
-      console.log(korisnik);
       if (korisnik?.aktivacijski_kod === parseInt(aktivacijski_kod)) {
         const dbResponse = await prisma.korisnik.update({
           where: {
