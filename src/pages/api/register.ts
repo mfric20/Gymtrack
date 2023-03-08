@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/api/client";
 import { mailOptions, transporter } from "@/services/nodemailer";
 import bcrypt from "bcrypt";
 import NextCors from "nextjs-cors";
@@ -9,8 +9,6 @@ type Data = {
   message?: string;
   id?: number;
 };
-
-const prisma = new PrismaClient();
 
 export default async function handler(
   req: NextApiRequest,
