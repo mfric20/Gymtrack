@@ -3,11 +3,12 @@ import { prisma } from "@/api/client";
 import { mailOptions, transporter } from "@/services/nodemailer";
 import bcrypt from "bcrypt";
 import NextCors from "nextjs-cors";
+import { v4 } from "uuid";
 
 type Data = {
   error?: string;
   message?: string;
-  id?: number;
+  id?: string;
 };
 
 export default async function handler(
@@ -25,11 +26,13 @@ export default async function handler(
       console.info("API zahtjev za registraciju novog korisnika!");
       const { ime, prezime, email, lozinka } = req.body;
 
+      const id = v4();
       const hash = await bcrypt.hash(lozinka, 12);
       const activationCode = Math.floor(Math.random() * 900000) + 100000;
 
       const dbResponse = await prisma.korisnik.create({
         data: {
+          id: id,
           ime: ime,
           prezime: prezime,
           email: email,
@@ -49,7 +52,7 @@ export default async function handler(
 
       return res
         .status(200)
-        .json({ message: "Kreiran je novi korisnik!", id: dbResponse.id });
+        .json({ message: "Kreiran je novi korisnik!", id: id });
     } catch (error) {
       console.error(
         `Greška kod API zahtjeva za registraciju novog korisnika | Poruka ${error}`

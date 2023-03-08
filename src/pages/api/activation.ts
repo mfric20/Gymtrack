@@ -25,14 +25,14 @@ export default async function handler(
 
       const korisnik = await prisma.korisnik.findFirst({
         where: {
-          id: parseInt(id),
+          id: id,
         },
       });
 
       if (korisnik?.aktivacijski_kod === parseInt(aktivacijski_kod)) {
         const dbResponse = await prisma.korisnik.update({
           where: {
-            id: parseInt(id),
+            id: id,
           },
           data: {
             aktiviran: 1,

@@ -8,7 +8,7 @@ datasource db {
 }
 
 model korisnik {
-  id                Int                 @id @unique(map: "sqlite_autoindex_korisnik_1") @default(autoincrement())
+  id                String                 @id @default(uuid())
   ime               String
   prezime           String
   email             String              @unique(map: "sqlite_autoindex_korisnik_2")
@@ -20,8 +20,8 @@ model korisnik {
 }
 
 model korisnik_teretana {
-  korisnik_id Int
-  teretana_id Int
+  korisnik_id String
+  teretana_id String
   uloga_id    Int?
   uloga       uloga?   @relation(fields: [uloga_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   korisnik    korisnik @relation(fields: [korisnik_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
@@ -31,7 +31,7 @@ model korisnik_teretana {
 }
 
 model korisnik_termin {
-  korisnik_id Int
+  korisnik_id String
   termin_id   Int
   termin      termin   @relation(fields: [termin_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   korisnik    korisnik @relation(fields: [korisnik_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
@@ -40,7 +40,7 @@ model korisnik_termin {
 }
 
 model teretana {
-  id                Int                 @id @unique(map: "sqlite_autoindex_teretana_1") @default(autoincrement())
+  id                String                 @id @default(uuid())
   naziv             String
   adresa            String
   slika             String?
@@ -53,7 +53,7 @@ model termin {
   pocetak         String
   kraj            String
   maksimalan_broj Int
-  teretana_id     Int
+  teretana_id     String
   korisnik_termin korisnik_termin[]
   teretana        teretana          @relation(fields: [teretana_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
