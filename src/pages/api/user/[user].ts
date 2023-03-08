@@ -33,6 +33,7 @@ export default async function handler(
             email: true,
             ime: true,
             prezime: true,
+            slika: true,
           },
         });
 

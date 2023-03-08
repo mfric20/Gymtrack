@@ -1,8 +1,8 @@
+import bcrypt from "bcrypt";
+import NextCors from "nextjs-cors";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { prisma } from "@/api/client";
 import { mailOptions, transporter } from "@/services/nodemailer";
-import bcrypt from "bcrypt";
-import NextCors from "nextjs-cors";
 import { v4 } from "uuid";
 
 type Data = {
@@ -24,7 +24,7 @@ export default async function handler(
   if (req.method === "POST") {
     try {
       console.info("API zahtjev za registraciju novog korisnika!");
-      const { ime, prezime, email, lozinka } = req.body;
+      const { ime, prezime, email, lozinka, slika } = req.body;
 
       const id = v4();
       const hash = await bcrypt.hash(lozinka, 12);
@@ -36,6 +36,7 @@ export default async function handler(
           ime: ime,
           prezime: prezime,
           email: email,
+          slika: slika,
           lozinka: hash,
           aktivacijski_kod: activationCode,
           aktiviran: 0,

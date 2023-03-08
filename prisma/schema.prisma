@@ -12,6 +12,7 @@ model korisnik {
   ime               String
   prezime           String
   email             String              @unique(map: "sqlite_autoindex_korisnik_2")
+  slika             String
   lozinka           String
   aktiviran         Int                 @default(0)
   aktivacijski_kod  Int
