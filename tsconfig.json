@@ -20,7 +20,8 @@
       "@/components/*": ["./src/components/*"],
       "@/assets/*": ["./public/assets/*"],
       "@/services/*": ["./src/services/*"],
-      "@/api/*": ["./src/pages/api/*"]
+      "@/api/*": ["./src/pages/api/*"],
+      "@/types/*": ["./src/types/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
