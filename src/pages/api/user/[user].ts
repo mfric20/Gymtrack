@@ -26,7 +26,7 @@ export default async function handler(
       if (user) {
         const korisnik = await prisma.korisnik.findFirst({
           where: {
-            email: user as string,
+            id: user as string,
           },
           select: {
             id: true,

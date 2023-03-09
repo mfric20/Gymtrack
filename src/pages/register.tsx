@@ -9,17 +9,13 @@ const shantell_sans = Shantell_Sans({ subsets: ["latin"] });
 
 export default function Registration() {
   const router = useRouter();
-  const defaultImage = process.env.PROFILE_IMAGE as string;
 
   const [ime, setIme] = useState<string>("");
   const [prezime, setPrezime] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [lozinka, setLozinka] = useState<string>("");
   const [pLozinka, setPLozinka] = useState<string>("");
-  const [profilePicture, setProfilePicture] = useState<string>(
-    process.env.PROFILE_IMAGE as string
-  );
-
+  const [profilePicture, setProfilePicture] = useState<string>("");
   const [emailError, setEmailError] = useState<boolean>(false);
   const [lozinkaError, setLozinkaError] = useState<boolean>(false);
   const [pLozinkaError, setPLozinkaError] = useState<boolean>(false);
@@ -229,7 +225,7 @@ export default function Registration() {
             </div>
           </div>
 
-          {profilePicture != defaultImage ? (
+          {profilePicture != "" ? (
             <div className="pt-4 flex flex-col space-y-2">
               <label htmlFor="plozinka" className="text-white">
                 Slika:
@@ -237,7 +233,7 @@ export default function Registration() {
               <div>
                 <XCircleIcon
                   className="absolute mt-2 ml-2 w-8 h-8 hover:cursor-pointer"
-                  onClick={() => setProfilePicture(defaultImage)}
+                  onClick={() => setProfilePicture("")}
                 />
                 <Image
                   src={profilePicture}
@@ -264,11 +260,11 @@ export default function Registration() {
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
-                      stroke-width="2"
+                      strokeWidth="2"
                     >
                       <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                         d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
                       />
                     </svg>

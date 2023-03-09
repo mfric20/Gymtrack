@@ -13,6 +13,7 @@ export default function Profile() {
   const router = useRouter();
 
   const [userInfo, setUserInfo] = useState<korisnik>();
+  const id = router.query.id;
 
   useEffect(() => {
     if (session.status === "unauthenticated") router.replace("/login");
@@ -21,7 +22,7 @@ export default function Profile() {
 
   const loadUserInfo = async () => {
     await axios
-      .get("/api/user/" + session.data?.user?.email)
+      .get("/api/user/" + id)
       .then((res) => {
         const podaci = JSON.parse(res.data.podaci) as korisnik;
         setUserInfo(podaci);
@@ -44,7 +45,7 @@ export default function Profile() {
               </div>
               <button
                 className="bg-green-600 text-white p-2 pr-4 pl-4 rounded-md hover:bg-green-500 h-10 shadow-lg w-32 text-sm font-semibold mr-20"
-                onClick={() => router.push("/register")}
+                onClick={() => router.push(`/user/profile/${id}/edit`)}
               >
                 <div className="flex flex-row space-x-4 items-center hover:cursor-pointer">
                   <PencilSquareIcon className="w-5" />
@@ -56,13 +57,17 @@ export default function Profile() {
           </div>
           <div className="flex flex-row pt-10 pb-10 pl-24 pr-24 space-x-4">
             <div className="w-full flex flex-col space-y-2">
-              <Image
-                src={userInfo?.slika as string | ""}
-                alt="slika profila"
-                width={350}
-                height={350}
-                className="rounded-lg mx-auto shadow-sm"
-              />
+              {userInfo?.slika ? (
+                <Image
+                  src={userInfo?.slika as string | ""}
+                  alt="slika profila"
+                  width={350}
+                  height={350}
+                  className="rounded-lg mx-auto shadow-sm"
+                />
+              ) : (
+                <></>
+              )}
             </div>
             <div className="flex flex-col text-white space-y-6 w-full justify-center border-2 border-slate-400 border-opacity-10 rounded-lg shadow-md">
               <div className="flex flex-col space-y-2">
