@@ -16,7 +16,7 @@ export default function Activation() {
   const handleOnSubmit = async () => {
     await axios
       .post(
-        "/api/activation",
+        "/api/auth/activation",
         {
           id: id,
           aktivacijski_kod: activationCode,

@@ -19,13 +19,16 @@ export default function EditProfile() {
   const router = useRouter();
   const id = router.query.id;
 
-  const [userInfo, setUserInfo] = useState<korisnik>();
-  const [newName, setNewName] = useState<string>("");
-  const [newForname, setNewForname] = useState<string>("");
-  const [currentPassword, setCurrentPassword] = useState<string>("");
-  const [newPassword, setNewPassword] = useState<string>("");
+  const [novoIme, setNovoIme] = useState<string>("");
+  const [novoPrezime, setNovoPrezime] = useState<string>("");
+  const [trenutnaLozinka, setTrenutnaLozinka] = useState<string>("");
+  const [novaLozinka, setNovaLozinka] = useState<string>("");
   const [profilePicture, setProfilePicture] = useState<string>("");
   const [pictureValue, setPictureValue] = useState<string>("");
+
+  const [trenutnaLozinkaError, setTrenutnaLozinkaError] =
+    useState<boolean>(false);
+  const [novaLozinkaError, setNovaLozinkaError] = useState<boolean>(false);
 
   useEffect(() => {
     if (session.status === "unauthenticated") router.replace("/login");
@@ -37,9 +40,8 @@ export default function EditProfile() {
       .get("/api/user/" + session.data?.user?.id)
       .then((res) => {
         const podaci = JSON.parse(res.data.podaci) as korisnik;
-        setUserInfo(podaci);
-        setNewName(podaci.ime);
-        setNewForname(podaci.prezime);
+        setNovoIme(podaci.ime);
+        setNovoPrezime(podaci.prezime);
         setProfilePicture(podaci.slika);
       })
       .catch((error) => {
@@ -65,6 +67,52 @@ export default function EditProfile() {
     setPictureValue(e.target.value);
     const base64 = (await convertToBase64(file)) as string;
     setProfilePicture(base64);
+  };
+
+  const handleOnSubmit = async (e: any) => {
+    if (novaLozinka.length < 6) setNovaLozinkaError(true);
+
+    if (
+      novoIme.length > 0 &&
+      novoPrezime.length > 0 &&
+      trenutnaLozinka.length > 0 &&
+      novaLozinka.length >= 6
+    ) {
+      console.log({
+        id,
+        novoIme,
+        novoPrezime,
+        trenutnaLozinka,
+        novaLozinka,
+        slika: profilePicture,
+      });
+
+      await axios
+        .put(
+          `/api/user/${id}`,
+          {
+            id,
+            novoIme,
+            novoPrezime,
+            trenutnaLozinka,
+            novaLozinka,
+            slika: profilePicture,
+          },
+          {
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        .then((res) => {
+          router.push(`/user/profile/${id}`);
+        })
+        .catch((error) => {
+          console.log(`Došlo je do pogreške! | Poruka: ${error.response}`);
+          if (error.response.status == 401) setTrenutnaLozinkaError(true);
+        });
+    }
   };
 
   return (
@@ -128,55 +176,97 @@ export default function EditProfile() {
                   <hr className="mr-16 ml-16 opacity-20" />
                 </div>
                 <div className="w-full flex flex-col space-y-2 pl-10 ">
-                  <p className="font-semibold text-lg">Ime:</p>
+                  <div className="flex flex-row space-x-1">
+                    <p className="font-semibold text-lg">Ime:</p>
+                    {novoIme.length == 0 ? (
+                      <pre className="text-red-600">*</pre>
+                    ) : (
+                      ""
+                    )}
+                  </div>
                   <input
                     type="text"
                     name="ime"
                     id="ime"
                     className="rounded-md p-1 bg-slate-100 mr-24 ml-4 text-black"
-                    defaultValue={newName}
-                    onChange={(e) => setNewName(e.target.value)}
+                    defaultValue={novoIme}
+                    onChange={(e) => setNovoIme(e.target.value)}
                   />
                 </div>
                 <div className="w-full flex flex-col space-y-2 pl-10 ">
-                  <p className="font-semibold text-lg">Prezime:</p>
+                  <div className="flex flex-row space-x-1">
+                    <p className="font-semibold text-lg">Prezime:</p>
+                    {novoPrezime.length == 0 ? (
+                      <pre className="text-red-600">*</pre>
+                    ) : (
+                      ""
+                    )}
+                  </div>
                   <input
                     type="text"
                     name="prezime"
                     id="prezime"
                     className="rounded-md p-1 bg-slate-100 mr-24 ml-4 text-black"
-                    defaultValue={newForname}
-                    onChange={(e) => setNewForname(e.target.value)}
+                    defaultValue={novoPrezime}
+                    onChange={(e) => setNovoPrezime(e.target.value)}
                   />
                 </div>
                 <div className="w-full flex flex-col space-y-2 pl-10 ">
-                  <p className="font-semibold text-lg">Trenutna lozinka:</p>
+                  <div className="flex flex-row space-x-1">
+                    <p className="font-semibold text-lg">Trenutna lozinka:</p>
+                    {trenutnaLozinka.length == 0 ? (
+                      <pre className="text-red-600">*</pre>
+                    ) : (
+                      ""
+                    )}
+                  </div>
                   <input
-                    type="text"
+                    type="password"
                     name="lozinka"
                     id="lozinka"
                     className="rounded-md p-1 bg-slate-100 mr-24 ml-4 text-black"
-                    value={currentPassword}
-                    onChange={(e) => setCurrentPassword(e.target.value)}
+                    value={trenutnaLozinka}
+                    onChange={(e) => setTrenutnaLozinka(e.target.value)}
                   />
+                  {!setTrenutnaLozinkaError ? (
+                    ""
+                  ) : (
+                    <div className="text-red-600 text-sm">
+                      Netočna trenutna lozinka!
+                    </div>
+                  )}
                 </div>
                 <div className="w-full flex flex-col space-y-2 pl-10 mb-6">
-                  <p className="font-semibold text-lg">Nova lozinka:</p>
+                  <div className="flex flex-row space-x-1">
+                    <p className="font-semibold text-lg">Nova lozinka:</p>
+                    {novaLozinka.length == 0 ? (
+                      <pre className="text-red-600">*</pre>
+                    ) : (
+                      ""
+                    )}
+                  </div>
                   <input
-                    type="text"
+                    type="password"
                     name="plozinka"
                     id="plozinka"
                     className="rounded-md p-1 bg-slate-100 mr-24 ml-4 text-black"
-                    value={newPassword}
-                    onChange={(e) => setNewPassword(e.target.value)}
+                    value={novaLozinka}
+                    onChange={(e) => setNovaLozinka(e.target.value)}
                   />
+                  {!novaLozinkaError ? (
+                    ""
+                  ) : (
+                    <div className="text-red-600 text-sm">
+                      Lozinka mora sadržavati barem 6 znakova!
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
             <div className="flex flex-row justify-center space-x-8">
               <button
                 className="bg-red-600 text-white p-2 pr-4 pl-4 rounded-md hover:bg-red-500 h-10 shadow-lg w-32 text-sm font-semibold"
-                onClick={() => router.push(`/user/profile/${id}/edit`)}
+                onClick={() => router.push(`/user/profile/${id}`)}
               >
                 <div className="flex flex-row space-x-4 items-center hover:cursor-pointer">
                   <XMarkIcon className="w-5" />
@@ -185,7 +275,7 @@ export default function EditProfile() {
               </button>
               <button
                 className="bg-green-600 text-white p-2 pr-4 pl-4 rounded-md hover:bg-green-500 h-10 shadow-lg w-32 text-sm font-semibold"
-                onClick={() => router.push(`/user/profile/${id}/edit`)}
+                onClick={handleOnSubmit}
               >
                 <div className="flex flex-row space-x-4 items-center hover:cursor-pointer">
                   <CheckIcon className="w-5" />

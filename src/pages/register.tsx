@@ -44,7 +44,7 @@ export default function Registration() {
     ) {
       await axios
         .post(
-          "/api/register",
+          "/api/auth/register",
           {
             ime: ime,
             prezime: prezime,

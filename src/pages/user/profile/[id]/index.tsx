@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { UserIcon, PencilSquareIcon } from "@heroicons/react/24/solid";
 import { korisnik } from "@prisma/client";
+import default_profil_pic from "@/assets/default_profile_pic.jpg";
 
 export default function Profile() {
   const session = useSession();
@@ -57,7 +58,7 @@ export default function Profile() {
           </div>
           <div className="flex flex-row pt-10 pb-10 pl-24 pr-24 space-x-4">
             <div className="w-full flex flex-col space-y-2">
-              {userInfo?.slika ? (
+              {userInfo?.slika != "" ? (
                 <Image
                   src={userInfo?.slika as string | ""}
                   alt="slika profila"
@@ -66,7 +67,13 @@ export default function Profile() {
                   className="rounded-lg mx-auto shadow-sm"
                 />
               ) : (
-                <></>
+                <Image
+                  src={default_profil_pic}
+                  alt="slika profila"
+                  width={350}
+                  height={350}
+                  className="rounded-lg mx-auto shadow-sm"
+                />
               )}
             </div>
             <div className="flex flex-col text-white space-y-6 w-full justify-center border-2 border-slate-400 border-opacity-10 rounded-lg shadow-md">

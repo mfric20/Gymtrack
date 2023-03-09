@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { prisma } from "@/api/client";
 import NextCors from "nextjs-cors";
+import bcrypt from "bcrypt";
 
 type Data = {
   error?: string;
@@ -45,6 +46,49 @@ export default async function handler(
       );
       return res.status(400).json({
         error: `Greška kod API zahtjeva za dohvaćanje korisnickih podataka  | Poruka ${error}`,
+      });
+    }
+  } else if (req.method === "PUT") {
+    try {
+      console.info("API zahtjev za ažuriranje korisnickih podataka!");
+      const { id, novoIme, novoPrezime, trenutnaLozinka, novaLozinka, slika } =
+        req.body;
+
+      const korisnik = await prisma.korisnik.findFirst({
+        where: {
+          id: id as string,
+        },
+      });
+
+      const passwordMatch = bcrypt.compareSync(
+        trenutnaLozinka,
+        korisnik.lozinka
+      );
+
+      if (passwordMatch) {
+        const hash = await bcrypt.hash(novaLozinka, 12);
+
+        const updatedKorisnik = await prisma.korisnik.update({
+          where: {
+            id: id as string,
+          },
+          data: {
+            ime: novoIme,
+            prezime: novoPrezime,
+            lozinka: hash,
+            slika: slika,
+          },
+        });
+
+        return res.status(200).json({ podaci: "Uspješno" });
+      }
+
+      return res.status(401).json({
+        error: `Netočna trenutna lozinka!`,
+      });
+    } catch (error) {
+      return res.status(400).json({
+        error: `Greška kod API zahtjeva za ažuriranje korisnickih podataka  | Poruka ${error}`,
       });
     }
   }

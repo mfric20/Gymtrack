@@ -30,16 +30,13 @@ export default async function handler(
       const hash = await bcrypt.hash(lozinka, 12);
       const activationCode = Math.floor(Math.random() * 900000) + 100000;
 
-      let uploadSlika = slika;
-      if (uploadSlika == "") uploadSlika = process.env.DEFAULT_PROFILE_IMAGE;
-
       const dbResponse = await prisma.korisnik.create({
         data: {
           id: id,
           ime: ime,
           prezime: prezime,
           email: email,
-          slika: uploadSlika,
+          slika: slika,
           lozinka: hash,
           aktivacijski_kod: activationCode,
           aktiviran: 0,
