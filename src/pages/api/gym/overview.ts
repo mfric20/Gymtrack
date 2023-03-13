@@ -25,26 +25,18 @@ export default async function handler(
   if (req.method === "GET") {
     try {
       if (session) {
-        console.info("API zahtjev za dohvaćanje teretana!");
-        const { user } = req.query;
+        console.info("API zahtjev za dohvaćanje svih teretana!");
+        const { nameSample } = req.query;
 
-        if (user) {
+        if (nameSample == "") {
+          const teretane = await prisma.teretana.findMany({});
+
+          return res.status(200).json({ teretane: JSON.stringify(teretane) });
+        } else {
           const teretane = await prisma.teretana.findMany({
-            include: {
-              korisnik_teretana: {
-                where: {
-                  korisnik: {
-                    email: user as string,
-                  },
-                },
-                include: {
-                  korisnik: {
-                    select: {
-                      id: true,
-                      email: true,
-                    },
-                  },
-                },
+            where: {
+              naziv: {
+                contains: nameSample as string,
               },
             },
           });
