@@ -7,7 +7,7 @@ export default function LoggedOutNavigation() {
   const router = useRouter();
 
   return (
-    <div className="flex flex-row pl-96 pr-96 justify-between shadow-lg rounded-md">
+    <div className="flex flex-row pl-[15%] pr-[15%] justify-between shadow-lg rounded-md">
       <div className="items-center mt-5 mb-5">
         <h1 className="font-bold text-white text-4xl">
           <label className={shantell_sans.className}>GYMTRACK</label>

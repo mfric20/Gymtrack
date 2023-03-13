@@ -19,12 +19,14 @@ export default function dashboard() {
       <div className="bg-gradient-to-tr from-slate-700 to-slate-900 h-screen flex flex-col justify-between">
         <div>
           <LoggedInNavigation />
-          <div className="mt-20 flex flex-col space-y-10 pl-96 pr-96">
+          <div className="mt-20 flex flex-col space-y-10 pl-[25%] pr-[25%]">
             <h2 className="text-white font-semibold text-2xl text-center">
               Ukoliko ste novi korisnik, pokušajte sljedeće:
             </h2>
-            <OverviewCard />
-            <MyCard />
+            <div className="flex flex-col space-y-10">
+              <OverviewCard />
+              <MyCard />
+            </div>
           </div>
         </div>
         <Footer />

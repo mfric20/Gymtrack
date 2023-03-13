@@ -61,7 +61,7 @@ export default function Index() {
     <div className="bg-gradient-to-tr from-slate-700 to-slate-900 min-h-screen overflow-hidden flex flex-col justify-between">
       <div>
         <LoggedInNavigation />
-        <div className="mt-20 mb-20 flex flex-col space-y-10 lg:ml-72 lg:mr-72 ml-5 mr-5 p-5 border-2 border-slate-400 rounded-md border-opacity-5 shadow-md">
+        <div className="mt-20 mb-20 flex flex-col space-y-10 lg:ml-[15%] lg:mr-[15%] ml-5 mr-5 p-5 border-2 border-slate-400 rounded-md border-opacity-5 shadow-md bg-slate-100 bg-opacity-5">
           <div className="flex flex-col space-y-5">
             <div className="flex flex-row space-x-4 items-center ml-20 mt-5">
               <NewspaperIcon className="w-10 fill-white" />
@@ -69,7 +69,7 @@ export default function Index() {
             </div>
             <hr className="mr-16 ml-16 opacity-20" />
           </div>
-          <div className="flex lg:space-y-0 lg:flex-row lg:space-x-8 justify-center p-5 flex-col space-y-4 space-x-0">
+          <div className="flex justify-center p-5 flex-row space-x-4">
             <InfoCard
               tekst="Broj aktivnih teretana:"
               link="overview"

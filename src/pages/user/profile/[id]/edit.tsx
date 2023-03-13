@@ -119,7 +119,7 @@ export default function EditProfile() {
     <div className="bg-gradient-to-tr from-slate-700 to-slate-900 min-h-screen overflow-hidden flex flex-col justify-between">
       <div>
         <LoggedInNavigation />
-        <div className="mt-20 mb-20 flex flex-col space-y-10 lg:ml-80 lg:mr-80 ml-5 mr-5 p-5 border-2 border-slate-400 rounded-md border-opacity-5 shadow-md">
+        <div className="mt-20 mb-20 flex flex-col space-y-10 lg:ml-[15%] lg:mr-[15%] ml-5 mr-5 p-5 border-2 border-slate-400 rounded-md border-opacity-5 shadow-md bg-slate-100 bg-opacity-5">
           <div className="flex flex-col space-y-5">
             <div className="flex flex-row justify-between items-center mt-5">
               <div className="flex flex-row space-x-4 items-center ml-20 ">
@@ -228,7 +228,7 @@ export default function EditProfile() {
                     value={trenutnaLozinka}
                     onChange={(e) => setTrenutnaLozinka(e.target.value)}
                   />
-                  {!setTrenutnaLozinkaError ? (
+                  {!trenutnaLozinkaError ? (
                     ""
                   ) : (
                     <div className="text-red-600 text-sm">
@@ -265,21 +265,21 @@ export default function EditProfile() {
             </div>
             <div className="flex flex-row justify-center space-x-8">
               <button
-                className="bg-red-600 text-white p-2 pr-4 pl-4 rounded-md hover:bg-red-500 h-10 shadow-lg w-32 text-sm font-semibold"
+                className="bg-red-600 text-white p-2 pr-4 pl-4 rounded-md hover:bg-red-500 h-10 shadow-lg w-32 text-sm font-semibold hover:cursor-pointer"
                 onClick={() => router.push(`/user/profile/${id}`)}
               >
                 <div className="flex flex-row space-x-4 items-center hover:cursor-pointer">
                   <XMarkIcon className="w-5" />
-                  <label>Odustani</label>
+                  <label className=" hover:cursor-pointer">Odustani</label>
                 </div>
               </button>
               <button
-                className="bg-green-600 text-white p-2 pr-4 pl-4 rounded-md hover:bg-green-500 h-10 shadow-lg w-32 text-sm font-semibold"
+                className="bg-green-600 text-white p-2 pr-4 pl-4 rounded-md hover:bg-green-500 h-10 shadow-lg w-32 text-sm font-semibold hover:cursor-pointer"
                 onClick={handleOnSubmit}
               >
                 <div className="flex flex-row space-x-4 items-center hover:cursor-pointer">
                   <CheckIcon className="w-5" />
-                  <label>Spremi</label>
+                  <label className=" hover:cursor-pointer">Spremi</label>
                 </div>
               </button>
             </div>

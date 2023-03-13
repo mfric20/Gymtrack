@@ -16,7 +16,7 @@ export default function LoggedInNavigation() {
   }, [session.status]);
 
   return (
-    <div className="flex flex-row pl-96 pr-96 justify-between shadow-lg rounded-md">
+    <div className="flex flex-row pl-[15%] pr-[15%] justify-between shadow-lg rounded-md">
       <div className="items-center mt-5 mb-5 hover:cursor-pointer">
         <h1 className="font-bold text-white text-4xl ">
           <a

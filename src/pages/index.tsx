@@ -8,11 +8,11 @@ export default function Home() {
   const router = useRouter();
 
   return (
-    <div className="bg-gradient-to-tr from-slate-700 to-slate-900 h-screen flex flex-col justify-between">
+    <div className="bg-gradient-to-tr from-slate-700 to-slate-900 min-h-screen overflow-hidden flex flex-col justify-between ">
       <div>
         <LoggedOutNavigation />
-        <div className="p-20 pl-96 pr-96 flex flex-row space-x-10">
-          <div className=" p-10 rounded-md">
+        <div className="p-20 lg:ml-[15%] lg:mr-[15%] flex lg:flex-row lg:space-x-10 flex-col space-y-4">
+          <div className=" p-10 rounded-md w-full">
             <div className="flex flex-col space-y-4">
               <h1 className="text-3xl font-bold text-white">
                 Jednostavno rješenje za gužve u teretanama!
@@ -32,12 +32,13 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <Image
-            src={GymPicture}
-            alt="teretana"
-            className="rounded-md shadow-xl"
-            width={600}
-          />
+          <div className="w-full">
+            <Image
+              src={GymPicture}
+              alt="teretana"
+              className="rounded-md shadow-xl lg:mt-[10%]"
+            />
+          </div>
         </div>
       </div>
       <Footer />
