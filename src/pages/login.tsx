@@ -74,7 +74,7 @@ export default function Login() {
               type="text"
               name="email"
               id="email"
-              className="rounded-md p-1 bg-slate-100 w-72"
+              className="rounded-md p-1 bg-slate-100 w-72 text-black"
               onChange={(e) => setEmail(e.target.value)}
             />
             {!emailError ? (
@@ -96,7 +96,7 @@ export default function Login() {
               type="password"
               name="lozinka"
               id="lozinka"
-              className="rounded-md p-1 bg-slate-100 w-72"
+              className="rounded-md p-1 bg-slate-100 w-72 text-black"
               onChange={(e) => setLozinka(e.target.value)}
             />
             {!lozinkaError ? (

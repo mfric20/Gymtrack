@@ -3,7 +3,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { signOut } from "next-auth/react";
-import { UserCircleIcon } from "@heroicons/react/24/solid";
+import { UserCircleIcon, ChevronDownIcon } from "@heroicons/react/24/solid";
 
 const shantell_sans = Shantell_Sans({ subsets: ["latin"] });
 
@@ -40,12 +40,33 @@ export default function LoggedInNavigation() {
         >
           Pregled teretana
         </a>
-        <a
-          onClick={() => router.push("/user/my")}
-          className="text-white font-semibold hover:cursor-pointer hover:text-slate-300"
-        >
-          Moje teretane
-        </a>
+        <div className="dropdown">
+          <div
+            className="flex flex-row hover:cursor-pointer hover:text-slate-300"
+            tabIndex={0}
+          >
+            <label className="m-1 text-white font-semibold  bg-transparent">
+              Moje teretane
+            </label>
+            <ChevronDownIcon className="w-5" />
+          </div>
+          <div
+            tabIndex={0}
+            className="dropdown-content p-4 shadow bg-slate-800 bg-opacity-95 rounded-md w-52 mt-2 flex flex-col space-y-2 justify-center"
+          >
+            <div className="hover:text-slate-300 hover:cursor-pointer text-white">
+              <a>Teretane u kojima sam član</a>
+            </div>
+            <hr className="mr-2 ml-2 opacity-20" />
+            <div className="hover:text-slate-300 hover:cursor-pointer text-white">
+              <a>Teretane u kojima sam djelatnik</a>
+            </div>
+            <hr className="mr-2 ml-2 opacity-20" />
+            <div className="hover:text-slate-300 hover:cursor-pointer text-white">
+              <a>Teretane u kojima sam vlasnik</a>
+            </div>
+          </div>
+        </div>
       </div>
       <div className="flex flex-row space-x-6 items-center">
         <button

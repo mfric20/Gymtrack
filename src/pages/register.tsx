@@ -119,7 +119,7 @@ export default function Registration() {
                 type="text"
                 name="ime"
                 id="ime"
-                className="rounded-md p-1 bg-slate-100"
+                className="rounded-md p-1 bg-slate-100 text-black"
                 onChange={(e) => setIme(e.target.value)}
               />
             </div>
@@ -138,7 +138,7 @@ export default function Registration() {
                 type="text"
                 name="prezime"
                 id="prezime"
-                className="rounded-md p-1 bg-slate-100"
+                className="rounded-md p-1 bg-slate-100 text-black"
                 onChange={(e) => setPrezime(e.target.value)}
               />
             </div>
@@ -153,7 +153,7 @@ export default function Registration() {
                 type="text"
                 name="email"
                 id="email"
-                className="rounded-md p-1 bg-slate-100"
+                className="rounded-md p-1 bg-slate-100 text-black"
                 onChange={(e) => setEmail(e.target.value)}
               />
               {!emailError ? (
@@ -186,7 +186,7 @@ export default function Registration() {
                 type="password"
                 name="lozinka"
                 id="lozinka"
-                className="rounded-md p-1 bg-slate-100"
+                className="rounded-md p-1 bg-slate-100 text-black"
                 onChange={(e) => setLozinka(e.target.value)}
               />
               {!lozinkaError ? (
@@ -212,7 +212,7 @@ export default function Registration() {
                 type="password"
                 name="plozinka"
                 id="plozinka"
-                className="rounded-md p-1 bg-slate-100"
+                className="rounded-md p-1 bg-slate-100 text-black"
                 onChange={(e) => setPLozinka(e.target.value)}
               />
               {!pLozinkaError ? (
