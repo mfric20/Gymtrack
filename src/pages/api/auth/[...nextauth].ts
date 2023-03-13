@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 import { prisma } from "@/api/client";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
-const authOptions: NextAuthOptions = {
+export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
   },

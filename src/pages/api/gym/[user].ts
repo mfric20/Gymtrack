@@ -1,6 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { prisma } from "@/api/client";
 import NextCors from "nextjs-cors";
+import { getToken } from "next-auth/jwt";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "../auth/[...nextauth]";
 
 type Data = {
   error?: string;
@@ -18,33 +21,39 @@ export default async function handler(
     optionsSuccessStatus: 200,
   });
 
+  const session = await getServerSession(req, res, authOptions);
+
   if (req.method === "GET") {
     try {
-      console.info("API zahtjev za dohvaćanje teretana!");
-      const { user } = req.query;
+      if (session) {
+        console.info("API zahtjev za dohvaćanje teretana!");
+        const { user } = req.query;
 
-      if (user) {
-        const teretane = await prisma.teretana.findMany({
-          include: {
-            korisnik_teretana: {
-              where: {
-                korisnik: {
-                  email: user as string,
+        if (user) {
+          const teretane = await prisma.teretana.findMany({
+            include: {
+              korisnik_teretana: {
+                where: {
+                  korisnik: {
+                    email: user as string,
+                  },
                 },
-              },
-              include: {
-                korisnik: {
-                  select: {
-                    id: true,
-                    email: true,
+                include: {
+                  korisnik: {
+                    select: {
+                      id: true,
+                      email: true,
+                    },
                   },
                 },
               },
             },
-          },
-        });
+          });
 
-        return res.status(200).json({ teretane: JSON.stringify(teretane) });
+          return res.status(200).json({ teretane: JSON.stringify(teretane) });
+        }
+      } else {
+        return res.status(401).json({ error: "Nema sesije!" });
       }
     } catch (error) {
       console.error(
