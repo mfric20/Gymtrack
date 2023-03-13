@@ -8,10 +8,7 @@ export default function MyCard() {
     <div className="flex flex-row space-x-40 justify-between w-full grow border-2 border-slate-500 border-opacity-10 drop-shadow-lg shadow-lg rounded-md p-4">
       <div className=" text-white flex flex-row space-x-4">
         <BookmarkIcon className="w-10" />
-        <div className="mt-auto mb-auto">
-          Pregled učlanjenih teretana te teretana u kojim ste djelatnik ili
-          vlasnik!
-        </div>
+        <div className="mt-auto mb-auto">Pregled učlanjenih teretana!</div>
       </div>
       <div className="h-full pt-1">
         <button

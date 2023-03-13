@@ -81,7 +81,7 @@ export default function Index() {
               broj={memberNumber}
             />
             <InfoCard
-              tekst="Broj teretana u kojima sam djelantik:"
+              tekst="Broj teretana u kojima sam djelatnik:"
               link="my"
               broj={workerNumber}
             />

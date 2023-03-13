@@ -35,7 +35,7 @@ export default function LoggedInNavigation() {
           Početna
         </a>
         <a
-          onClick={() => router.push("/user/overview")}
+          onClick={() => router.push("/user/gym/overview")}
           className="text-white font-semibold hover:cursor-pointer hover:text-slate-300"
         >
           Pregled teretana
@@ -45,7 +45,7 @@ export default function LoggedInNavigation() {
             className="flex flex-row hover:cursor-pointer hover:text-slate-300"
             tabIndex={0}
           >
-            <label className="m-1 text-white font-semibold  bg-transparent">
+            <label className="m-1 text-white font-semibold  bg-transparent hover:cursor-pointer hover:text-slate-300">
               Moje teretane
             </label>
             <ChevronDownIcon className="w-5" />
@@ -55,15 +55,21 @@ export default function LoggedInNavigation() {
             className="dropdown-content p-4 shadow bg-slate-800 bg-opacity-95 rounded-md w-52 mt-2 flex flex-col space-y-2 justify-center"
           >
             <div className="hover:text-slate-300 hover:cursor-pointer text-white">
-              <a>Teretane u kojima sam član</a>
+              <a onClick={() => router.push("/user/my/member")}>
+                Teretane u kojima sam učlanjen
+              </a>
             </div>
             <hr className="mr-2 ml-2 opacity-20" />
             <div className="hover:text-slate-300 hover:cursor-pointer text-white">
-              <a>Teretane u kojima sam djelatnik</a>
+              <a onClick={() => router.push("/user/my/worker")}>
+                Teretane u kojima sam djelatnik
+              </a>
             </div>
             <hr className="mr-2 ml-2 opacity-20" />
             <div className="hover:text-slate-300 hover:cursor-pointer text-white">
-              <a>Teretane u kojima sam vlasnik</a>
+              <a onClick={() => router.push("/user/my/owner")}>
+                Teretane u kojima sam vlasnik
+              </a>
             </div>
           </div>
         </div>
