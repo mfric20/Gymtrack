@@ -13,6 +13,7 @@ import {
   XCircleIcon,
 } from "@heroicons/react/24/solid";
 import { korisnik } from "@prisma/client";
+import { convertToBase64 } from "@/functinos/functions";
 
 export default function EditProfile() {
   const session = useSession();
@@ -49,19 +50,6 @@ export default function EditProfile() {
       });
   };
 
-  const convertToBase64 = (file: any) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-      fileReader.onload = () => {
-        resolve(fileReader.result);
-      };
-      fileReader.onerror = (error) => {
-        reject(error);
-      };
-    });
-  };
-
   const handleOnDrop = async (e: any) => {
     const file = e.target.files[0];
     setPictureValue(e.target.value);
@@ -78,15 +66,6 @@ export default function EditProfile() {
       trenutnaLozinka.length > 0 &&
       novaLozinka.length >= 6
     ) {
-      console.log({
-        id,
-        novoIme,
-        novoPrezime,
-        trenutnaLozinka,
-        novaLozinka,
-        slika: profilePicture,
-      });
-
       await axios
         .put(
           `/api/user/${id}`,

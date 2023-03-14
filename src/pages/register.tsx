@@ -2,6 +2,7 @@ import { Shantell_Sans } from "next/font/google";
 import { ArrowLongLeftIcon, XCircleIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { convertToBase64 } from "@/functinos/functions";
 import axios from "axios";
 import Image from "next/image";
 
@@ -69,19 +70,6 @@ export default function Registration() {
           setEmailExists(true);
         });
     }
-  };
-
-  const convertToBase64 = (file: any) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-      fileReader.onload = () => {
-        resolve(fileReader.result);
-      };
-      fileReader.onerror = (error) => {
-        reject(error);
-      };
-    });
   };
 
   const handleOnDrop = async (e: any) => {
