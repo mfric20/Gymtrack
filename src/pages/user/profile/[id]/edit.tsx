@@ -135,29 +135,33 @@ export default function EditProfile() {
             <div className="flex flex-row pt-10 pb-10 pl-24 pr-24 space-x-4">
               <div className="w-full flex flex-col space-y-8">
                 <div className="flex mx-auto">
-                  <XCircleIcon
-                    className="absolute mt-2 ml-2 w-8 h-8 hover:cursor-pointer"
-                    onClick={(e) => {
-                      setProfilePicture("");
-                      setPictureValue("");
-                    }}
-                  />
                   {profilePicture == "" ? (
-                    <Image
-                      src={default_profil_pic}
-                      alt="slika profila"
-                      width={350}
-                      height={350}
-                      className="rounded-lg mx-auto shadow-sm"
-                    />
+                    <>
+                      <Image
+                        src={default_profil_pic}
+                        alt="slika profila"
+                        width={350}
+                        height={350}
+                        className="rounded-lg mx-auto shadow-sm z-0"
+                      />
+                    </>
                   ) : (
-                    <Image
-                      src={profilePicture}
-                      alt="slika profila"
-                      width={350}
-                      height={350}
-                      className="rounded-lg mx-auto shadow-sm"
-                    />
+                    <>
+                      <XCircleIcon
+                        className="absolute mt-2 ml-2 w-8 h-8 hover:cursor-pointer z-10 fill-black"
+                        onClick={(e) => {
+                          setProfilePicture("");
+                          setPictureValue("");
+                        }}
+                      />
+                      <Image
+                        src={profilePicture}
+                        alt="slika profila"
+                        width={350}
+                        height={350}
+                        className="rounded-lg mx-auto shadow-sm"
+                      />
+                    </>
                   )}
                 </div>
                 <input
