@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { BookmarkIcon, PlusCircleIcon } from "@heroicons/react/24/solid";
 import { teretana } from "@prisma/client";
 
-export default function My() {
+export default function Owner() {
   const session = useSession();
   const router = useRouter();
 
@@ -41,7 +41,7 @@ export default function My() {
               <div className="flex flex-row space-x-4 items-center ml-20 ">
                 <BookmarkIcon className="w-8 fill-white" />
                 <h2 className="text-white font-semibold text-2xl">
-                  Teretane u kojim sam vlasnik
+                  Teretane u kojima sam vlasnik
                 </h2>
               </div>
               <button
@@ -56,7 +56,7 @@ export default function My() {
             </div>
             <hr className="mr-16 ml-16 opacity-20" />
           </div>
-          <div className="flex flex-wrap pl-[8%] pr-[8%] justify-center">
+          <div className="flex flex-wrap mx-auto">
             {ownerGyms != undefined ? (
               ownerGyms.map((gym) => {
                 return <GymInfo gymInfo={gym} key={gym.id} />;
