@@ -6,7 +6,7 @@ export default function GymInfo({ gymInfo }: { gymInfo: teretana }) {
   const router = useRouter();
 
   return (
-    <div className="flex mr-5 mb-5 flex-col justify-between space-y-6 border-2 border-slate-800 border-opacity-30 hover:shadow-2xl drop-shadow-lg shadow-lg rounded-md p-8 text-center">
+    <div className="flex mr-5 mb-5 flex-col justify-between space-y-6 border-2 border-slate-800 border-opacity-50 hover:shadow-2xl drop-shadow-lg shadow-lg rounded-md p-8 text-center">
       <div className=" text-white text-center">
         <div className="mt-auto mb-auto text-xl font-semibold">
           {gymInfo.naziv}
