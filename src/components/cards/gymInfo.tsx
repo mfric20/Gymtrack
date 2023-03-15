@@ -24,7 +24,7 @@ export default function GymInfo({ gymInfo }: { gymInfo: teretana }) {
       <div className="h-full pt-1">
         <button
           className="bg-green-600 mt-auto mb-auto text-white p-2 pr-8 pl-8 rounded-lg hover:bg-green-500 h-10 shadow-md w-[100%] text-sm font-semibold"
-          onClick={() => router.push("/user/my")}
+          onClick={() => router.push(`/user/my/${gymInfo.id}/`)}
         >
           Prikaži detalje
         </button>

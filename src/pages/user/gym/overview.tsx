@@ -59,7 +59,7 @@ export default function Overview() {
             </div>
             <hr className="mr-16 ml-16 opacity-20" />
           </div>
-          <div className="flex flex-wrap pl-[8%] pr-[8%] justify-center">
+          <div className="flex flex-wrap mx-auto">
             {gymsInfo != undefined ? (
               gymsInfo.map((gym) => {
                 return <GymInfo gymInfo={gym} key={gym.id} />;

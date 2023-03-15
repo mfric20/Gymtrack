@@ -62,5 +62,40 @@ export default async function handler(
         error: `Greška kod API zahtjeva za dohvaćanje teretana  | Poruka ${error}`,
       });
     }
+  } else if (req.method === "POST") {
+    try {
+      if (session) {
+        console.info("API zahtjev za dohvaćanje teretane!");
+        const { user } = req.query;
+        const { gymId } = req.body;
+
+        if (user) {
+          const teretana = await prisma.teretana.findMany({
+            where: {
+              korisnik_teretana: {
+                some: {
+                  korisnik_id: user as string,
+                  teretana_id: gymId,
+                },
+              },
+            },
+            include: {
+              korisnik_teretana: true,
+            },
+          });
+
+          return res.status(200).json({ teretane: JSON.stringify(teretana) });
+        }
+      } else {
+        return res.status(401).json({ error: "Nema sesije!" });
+      }
+    } catch (error) {
+      console.error(
+        `Greška kod API zahtjeva za dohvaćanje teretane | Poruka ${error}`
+      );
+      return res.status(400).json({
+        error: `Greška kod API zahtjeva za dohvaćanje teretane  | Poruka ${error}`,
+      });
+    }
   }
 }
