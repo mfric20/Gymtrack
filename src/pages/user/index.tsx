@@ -72,22 +72,22 @@ export default function Index() {
           <div className="flex justify-center p-5 flex-row space-x-4">
             <InfoCard
               tekst="Broj aktivnih teretana:"
-              link="overview"
+              link="gym/overview"
               broj={activeNumber}
             />
             <InfoCard
               tekst="Broj teretana u kojima sam učlanjen:"
-              link="my"
+              link="my/member"
               broj={memberNumber}
             />
             <InfoCard
               tekst="Broj teretana u kojima sam djelatnik:"
-              link="my"
+              link="my/worker"
               broj={workerNumber}
             />
             <InfoCard
               tekst="Broj teretana u kojima sam vlasnik:"
-              link="my"
+              link="my/owner"
               broj={ownerNumber}
             />
           </div>
