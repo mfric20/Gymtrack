@@ -66,15 +66,15 @@ export default async function handler(
     try {
       if (session) {
         console.info("API zahtjev za dohvaćanje teretane!");
-        const { user } = req.query;
+        const { id } = req.query;
         const { gymId } = req.body;
 
-        if (user) {
+        if (id) {
           const teretana = await prisma.teretana.findMany({
             where: {
               korisnik_teretana: {
                 some: {
-                  korisnik_id: user as string,
+                  korisnik_id: id as string,
                   teretana_id: gymId,
                 },
               },

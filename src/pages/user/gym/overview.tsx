@@ -20,7 +20,6 @@ export default function Overview() {
   }, [session.status]);
 
   const loadGyms = async (nameSample: string) => {
-    console.log("Zovem sa: ", nameSample);
     await axios
       .get("/api/gym/overview", { params: { nameSample: nameSample } })
       .then((res) => {
