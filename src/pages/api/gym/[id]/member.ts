@@ -1,6 +1,6 @@
+import NextCors from "nextjs-cors";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { prisma } from "@/api/client";
-import NextCors from "nextjs-cors";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "../../auth/[...nextauth]";
 
@@ -26,17 +26,17 @@ export default async function handler(
   if (req.method === "GET") {
     try {
       if (session) {
-        console.info("API zahtjev za dohvaćanje teretana djelatnika!");
-        const { user } = req.query;
+        console.info("API zahtjev za dohvaćanje učlanjenih teretana!");
+        const { id } = req.query;
 
-        if (user) {
+        if (id) {
           const teretane = await prisma.teretana.findMany({
             where: {
               korisnik_teretana: {
                 some: {
-                  uloga_id: 2,
+                  uloga_id: 1,
                   korisnik: {
-                    id: user as string,
+                    id: id as string,
                   },
                 },
               },
@@ -50,10 +50,10 @@ export default async function handler(
       }
     } catch (error) {
       console.error(
-        `Greška kod API zahtjeva za dohvaćanje teretana djelatnika | Poruka ${error}`
+        `Greška kod API zahtjeva za dohvaćanje učlanjenih teretana | Poruka ${error}`
       );
       return res.status(400).json({
-        error: `Greška kod API zahtjeva za dohvaćanje teretana djelatnika | Poruka ${error}`,
+        error: `Greška kod API zahtjeva za dohvaćanje učlanjenih teretana  | Poruka ${error}`,
       });
     }
   }

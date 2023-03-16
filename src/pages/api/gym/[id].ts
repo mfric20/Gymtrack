@@ -25,16 +25,16 @@ export default async function handler(
   if (req.method === "GET") {
     try {
       if (session) {
-        console.info("API zahtjev za dohvaćanje teretana!");
-        const { user } = req.query;
+        console.info("API zahtjev za dohvaćanje početnih teretana!");
+        const { id } = req.query;
 
-        if (user) {
+        if (id) {
           const teretane = await prisma.teretana.findMany({
             include: {
               korisnik_teretana: {
                 where: {
                   korisnik: {
-                    email: user as string,
+                    id: id as string,
                   },
                 },
                 include: {
@@ -56,10 +56,10 @@ export default async function handler(
       }
     } catch (error) {
       console.error(
-        `Greška kod API zahtjeva za dohvaćanje teretana | Poruka ${error}`
+        `Greška kod API zahtjeva za dohvaćanje početnih teretana | Poruka ${error}`
       );
       return res.status(400).json({
-        error: `Greška kod API zahtjeva za dohvaćanje teretana  | Poruka ${error}`,
+        error: `Greška kod API zahtjeva za dohvaćanje početnih teretana  | Poruka ${error}`,
       });
     }
   } else if (req.method === "POST") {

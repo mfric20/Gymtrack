@@ -26,7 +26,7 @@ export default function Index() {
 
   const loadGyms = async () => {
     await axios
-      .get("/api/gym/" + session.data?.user?.email)
+      .get("/api/gym/" + session.data?.user?.id)
       .then((res) => {
         const teretane = JSON.parse(
           res.data.teretane

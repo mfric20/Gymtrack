@@ -25,7 +25,7 @@ export default async function handler(
   if (req.method === "GET") {
     try {
       if (session) {
-        console.info("API zahtjev za dohvaćanje svih teretana!");
+        console.info("API zahtjev za dohvaćanje svih teretana za pregled!");
         const { nameSample } = req.query;
 
         if (nameSample == "") {
@@ -48,10 +48,10 @@ export default async function handler(
       }
     } catch (error) {
       console.error(
-        `Greška kod API zahtjeva za dohvaćanje teretana | Poruka ${error}`
+        `Greška kod API zahtjeva za dohvaćanje svih teretana za pregled| Poruka ${error}`
       );
       return res.status(400).json({
-        error: `Greška kod API zahtjeva za dohvaćanje teretana  | Poruka ${error}`,
+        error: `Greška kod API zahtjeva za dohvaćanje svih teretana za pregled | Poruka ${error}`,
       });
     }
   }
