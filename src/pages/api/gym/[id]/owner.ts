@@ -40,6 +40,7 @@ export default async function handler(
                   korisnik: {
                     id: id as string,
                   },
+                  odobren: true,
                 },
               },
             },
@@ -62,26 +63,31 @@ export default async function handler(
     try {
       if (session) {
         console.log("API zahtjev za kreiranje teretane!");
-        const { user } = req.query;
+        const { id } = req.query;
         const { naziv, adresa, slika } = req.body;
-        const id = v4();
+        const gymId = v4();
 
-        const teretana = await prisma.teretana.create({
-          data: {
-            id: id,
-            naziv: naziv,
-            adresa: adresa,
-            slika: slika,
-          },
-        });
+        console.log(id);
+        console.log(gymId);
 
-        const kor_ter = await prisma.korisnik_teretana.create({
-          data: {
-            korisnik_id: user as string,
-            teretana_id: id,
-            uloga_id: 3,
-          },
-        });
+        const [teretana, kor_ter] = await prisma.$transaction([
+          prisma.teretana.create({
+            data: {
+              id: gymId,
+              naziv: naziv,
+              adresa: adresa,
+              slika: slika,
+            },
+          }),
+          prisma.korisnik_teretana.create({
+            data: {
+              korisnik_id: id as string,
+              teretana_id: gymId,
+              uloga_id: 3,
+              odobren: true,
+            },
+          }),
+        ]);
 
         return res.status(200).json({ message: "Uspješno!" });
       } else {

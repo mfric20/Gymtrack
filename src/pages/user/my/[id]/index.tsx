@@ -49,6 +49,7 @@ export default function Index() {
                 korisnik_id: "",
                 teretana_id: "",
                 uloga_id: 0,
+                odobren: false,
               },
             ],
             naziv: "",
@@ -80,11 +81,14 @@ export default function Index() {
           </div>
           <div>
             {gymInfo ? (
-              gymInfo.id.length == 0 ? (
-                <GuestInfo></GuestInfo>
-              ) : gymInfo.korisnik_teretana[0].uloga_id == 1 ? (
+              gymInfo.id.length == 0 ||
+              gymInfo.korisnik_teretana[0].odobren == false ? (
+                <GuestInfo />
+              ) : gymInfo.korisnik_teretana[0].uloga_id == 1 &&
+                gymInfo.korisnik_teretana[0].odobren == true ? (
                 <MemberInfo></MemberInfo>
-              ) : gymInfo.korisnik_teretana[0].uloga_id == 2 ? (
+              ) : gymInfo.korisnik_teretana[0].uloga_id == 2 &&
+                gymInfo.korisnik_teretana[0].odobren == true ? (
                 <WorkerInfo></WorkerInfo>
               ) : (
                 <OwnerInfo></OwnerInfo>

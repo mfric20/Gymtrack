@@ -63,7 +63,7 @@ export default function Activation() {
             type="text"
             name="aktivacijskiKod"
             id="aktivacijskiKod"
-            className="rounded-md p-1 bg-slate-100 text-lg font-bold text-center tracking-wider"
+            className="rounded-md p-1 bg-slate-100 text-lg font-bold text-center tracking-wider text-black"
             onChange={(e) => setActivationCode(parseInt(e.target.value))}
           />
           {!wrongCodeLabel ? (

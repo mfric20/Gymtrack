@@ -80,7 +80,7 @@ export default function Registration() {
 
   return (
     <div className="flex bg-gradient-to-tr from-slate-700 to-slate-900 min-h-screen items-center justify-center">
-      <div className="shadow-lg p-10 rounded-lg flex flex-col space-y-4 mt-10 mb-10 w-1/4 bg-slate-100 bg-opacity-5">
+      <div className="shadow-lg p-10 rounded-lg flex flex-col space-y-4 mt-10 mb-10  bg-slate-100 bg-opacity-5">
         <div>
           <ArrowLongLeftIcon
             className="h-8 fill-white al hover:cursor-pointer"
@@ -227,7 +227,7 @@ export default function Registration() {
                   src={profilePicture}
                   alt="Slika profila"
                   width={400}
-                  height={400}
+                  height={300}
                   className="rounded-lg w-full h-96"
                 />
               </div>

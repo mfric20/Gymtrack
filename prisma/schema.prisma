@@ -24,6 +24,7 @@ model korisnik_teretana {
   korisnik_id String
   teretana_id String
   uloga_id    Int?
+  odobren     Boolean?
   uloga       uloga?   @relation(fields: [uloga_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   korisnik    korisnik @relation(fields: [korisnik_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   teretana    teretana @relation(fields: [teretana_id], references: [id], onDelete: NoAction, onUpdate: NoAction)

@@ -36,6 +36,7 @@ export default async function handler(
                   korisnik: {
                     id: id as string,
                   },
+                  odobren: true,
                 },
                 include: {
                   korisnik: {
