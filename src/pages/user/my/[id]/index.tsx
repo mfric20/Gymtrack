@@ -16,6 +16,7 @@ export default function Index() {
   const router = useRouter();
 
   const [gymInfo, setGymInfo] = useState<teretana_info>();
+  const [guest, setGuest] = useState<boolean>(false);
 
   useEffect(() => {
     if (session.status === "unauthenticated") router.replace("/login");
@@ -40,25 +41,9 @@ export default function Index() {
         }
       )
       .then((res) => {
-        if (JSON.parse(res.data.teretane)[0] == undefined) {
-          setGymInfo({
-            adresa: "",
-            id: "",
-            korisnik_teretana: [
-              {
-                korisnik_id: "",
-                teretana_id: "",
-                uloga_id: 0,
-                odobren: false,
-              },
-            ],
-            naziv: "",
-            slika: "",
-          });
-        } else {
-          setGymInfo(JSON.parse(res.data.teretane)[0]);
-        }
-        console.log(gymInfo);
+        if (JSON.parse(res.data.teretane)[0] == undefined) setGuest(true);
+
+        setGymInfo(JSON.parse(res.data.teretane)[0]);
       })
       .catch((error) => {
         console.log(`Došlo je do pogreške! | Poruka: ${error}`);
@@ -81,18 +66,23 @@ export default function Index() {
           </div>
           <div>
             {gymInfo ? (
-              gymInfo.id.length == 0 ||
+              gymInfo.korisnik_teretana[0].uloga_id == 1 &&
               gymInfo.korisnik_teretana[0].odobren == false ? (
                 <GuestInfo />
               ) : gymInfo.korisnik_teretana[0].uloga_id == 1 &&
                 gymInfo.korisnik_teretana[0].odobren == true ? (
-                <MemberInfo></MemberInfo>
+                <MemberInfo />
               ) : gymInfo.korisnik_teretana[0].uloga_id == 2 &&
                 gymInfo.korisnik_teretana[0].odobren == true ? (
-                <WorkerInfo></WorkerInfo>
+                <WorkerInfo />
+              ) : gymInfo.korisnik_teretana[0].uloga_id == 3 &&
+                gymInfo.korisnik_teretana[0].odobren == true ? (
+                <OwnerInfo />
               ) : (
-                <OwnerInfo></OwnerInfo>
+                <></>
               )
+            ) : guest === true ? (
+              <GuestInfo />
             ) : (
               <div>Loading...</div>
             )}
