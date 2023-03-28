@@ -44,6 +44,7 @@ export default function Index() {
         if (JSON.parse(res.data.teretane)[0] == undefined) setGuest(true);
 
         setGymInfo(JSON.parse(res.data.teretane)[0]);
+        console.log(JSON.parse(res.data.teretane)[0]);
       })
       .catch((error) => {
         console.log(`Došlo je do pogreške! | Poruka: ${error}`);

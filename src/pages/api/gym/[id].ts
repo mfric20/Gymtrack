@@ -70,18 +70,17 @@ export default async function handler(
         const { id } = req.query;
         const { gymId } = req.body;
 
+        console.log("Id: ", id);
+        console.log("GymId: ", gymId);
         if (id) {
           const teretana = await prisma.teretana.findMany({
-            where: {
+            include: {
               korisnik_teretana: {
-                some: {
+                where: {
                   korisnik_id: id as string,
                   teretana_id: gymId,
                 },
               },
-            },
-            include: {
-              korisnik_teretana: true,
             },
           });
 
