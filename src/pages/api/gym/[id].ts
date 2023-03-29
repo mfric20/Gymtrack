@@ -70,8 +70,6 @@ export default async function handler(
         const { id } = req.query;
         const { gymId } = req.body;
 
-        console.log("Id: ", id);
-        console.log("GymId: ", gymId);
         if (id) {
           const teretana = await prisma.teretana.findFirst({
             where: {

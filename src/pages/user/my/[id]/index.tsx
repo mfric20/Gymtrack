@@ -23,7 +23,6 @@ export default function Index() {
     if (session.status === "authenticated") loadUserGymInfo();
   }, [session.status]);
 
-  console.log("HALO");
   const loadUserGymInfo = async () => {
     const userId = session.data.user.id;
     const gymId = router.query.id;
@@ -45,7 +44,6 @@ export default function Index() {
         if (JSON.parse(res.data.teretane) == undefined) setGuest(true);
 
         setGymInfo(JSON.parse(res.data.teretane));
-        console.log(JSON.parse(res.data.teretane));
       })
       .catch((error) => {
         console.log(`Došlo je do pogreške! | Poruka: ${error}`);
