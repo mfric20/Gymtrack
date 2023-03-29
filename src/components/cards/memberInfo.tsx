@@ -1,48 +1,22 @@
 import { korisnik } from "@prisma/client";
-import { CheckIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import { TrashIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/router";
+import default_profil_pic from "@/assets/default_profile_pic.jpg";
 import Image from "next/image";
 import axios from "axios";
-import default_profil_pic from "@/assets/default_profile_pic.jpg";
 
-export default function ApplicationInfo({
+export default function MemberInfo({
   user,
   loadGymMembers,
-  loadGymApplications,
 }: {
   user: korisnik;
   loadGymMembers: (searchSample: string) => Promise<void>;
-  loadGymApplications: () => Promise<void>;
 }) {
   const router = useRouter();
-
-  const handleAcceptClick = async (userId: string) => {
+  const handleDeleteClick = async (userId: string) => {
     const id = router.query.id;
     await axios
-      .put(
-        "/api/gym/" + id + "/members/applicationMembers",
-        {
-          userId: userId,
-        },
-        {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then((res) => {
-        loadGymMembers("");
-        loadGymApplications();
-      })
-      .catch((error) => {
-        console.log(`Došlo je do pogreške! | Poruka: ${error}`);
-      });
-  };
-  const handleDeclineClick = async (userId: string) => {
-    const id = router.query.id;
-    await axios
-      .delete("/api/gym/" + id + "/members/applicationMembers", {
+      .delete("/api/gym/" + id + "/members/members", {
         data: {
           userId: userId,
         },
@@ -53,12 +27,12 @@ export default function ApplicationInfo({
       })
       .then((res) => {
         loadGymMembers("");
-        loadGymApplications();
       })
       .catch((error) => {
         console.log(`Došlo je do pogreške! | Poruka: ${error}`);
       });
   };
+
   return (
     <div className="border-2 rounded-md border-slate-300 shadow-lg border-opacity-40 p-3 flex flex-row justify-between px-[2%]">
       <div className="flex flex-row space-x-4">
@@ -82,20 +56,13 @@ export default function ApplicationInfo({
           </div>
         </div>
       </div>
-      <div className="flex flex-col space-y-2 justify-center">
-        <button
-          className="p-2 px-6 bg-green-600 text-white rounded-md shadow-md hover:bg-green-500 font-semibold flex flex-row space-x-2 items-center"
-          onClick={() => handleAcceptClick(user.id)}
-        >
-          <CheckIcon className="w-5" />
-          <h2>Prihvati</h2>
-        </button>
+      <div className="flex items-center">
         <button
           className="p-2 px-6 bg-red-600 text-white rounded-md shadow-md hover:bg-red-500 font-semibold flex flex-row space-x-2 items-center"
-          onClick={() => handleDeclineClick(user.id)}
+          onClick={() => handleDeleteClick(user.id)}
         >
-          <XMarkIcon className="w-5" />
-          <h2>Odbij</h2>
+          <TrashIcon className="w-5" />
+          <h2>Izbriši</h2>
         </button>
       </div>
     </div>

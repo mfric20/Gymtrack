@@ -31,7 +31,6 @@ export default function My() {
     const base64 = (await convertToBase64(file)) as string;
     setGymPicture(base64);
   };
-
   const handleOnSubmit = async () => {
     const id = session.data.user.id;
     if (naziv.length > 0 && adresa.length > 0) {

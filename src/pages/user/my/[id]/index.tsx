@@ -67,16 +67,18 @@ export default function Index() {
           </div>
           <div>
             {gymInfo ? (
-              gymInfo.korisnik_teretana[0].uloga_id == 1 &&
-              gymInfo.korisnik_teretana[0].odobren == false ? (
+              gymInfo.korisnik_teretana.length == 0 ? (
                 <GuestInfo />
-              ) : gymInfo.korisnik_teretana[0].uloga_id == 1 &&
+              ) : gymInfo.korisnik_teretana[0]?.uloga_id == 1 &&
+                gymInfo.korisnik_teretana[0].odobren == false ? (
+                <GuestInfo />
+              ) : gymInfo.korisnik_teretana[0]?.uloga_id == 1 &&
                 gymInfo.korisnik_teretana[0].odobren == true ? (
                 <MemberInfo />
-              ) : gymInfo.korisnik_teretana[0].uloga_id == 2 &&
+              ) : gymInfo.korisnik_teretana[0]?.uloga_id == 2 &&
                 gymInfo.korisnik_teretana[0].odobren == true ? (
                 <WorkerInfo />
-              ) : gymInfo.korisnik_teretana[0].uloga_id == 3 &&
+              ) : gymInfo.korisnik_teretana[0]?.uloga_id == 3 &&
                 gymInfo.korisnik_teretana[0].odobren == true ? (
                 <OwnerInfo />
               ) : (

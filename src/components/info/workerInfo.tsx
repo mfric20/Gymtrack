@@ -6,11 +6,13 @@ import {
   ListBulletIcon,
   UserGroupIcon,
   UserPlusIcon,
+  MagnifyingGlassIcon,
 } from "@heroicons/react/24/solid";
 import { korisnik } from "@prisma/client";
 import ApplicationInfo from "../cards/applicationInfo";
 import axios from "axios";
 import Image from "next/image";
+import MemberInfo from "../cards/memberInfo";
 
 export default function WorkerInfo() {
   const [selectedTab, setSelectedTab] = useState<string>("info");
@@ -29,7 +31,7 @@ export default function WorkerInfo() {
 
   useEffect(() => {
     if (selectedTab == "clanovi") {
-      loadGymMembers();
+      loadGymMembers("");
       loadGymApplication();
     }
   }, [selectedTab]);
@@ -45,9 +47,11 @@ export default function WorkerInfo() {
       });
   };
 
-  const loadGymMembers = async () => {
+  const loadGymMembers = async (searchSample: string) => {
     await axios
-      .get("/api/gym/" + gymId + "/members/getMembers")
+      .get(
+        "/api/gym/" + gymId + "/members/members?searchSample=" + searchSample
+      )
       .then((res) => {
         setMembers(JSON.parse(res.data.members));
       })
@@ -58,7 +62,7 @@ export default function WorkerInfo() {
 
   const loadGymApplication = async () => {
     await axios
-      .get("/api/gym/" + gymId + "/members/getApplicationMembers")
+      .get("/api/gym/" + gymId + "/members/applicationMembers")
       .then((res) => {
         setApplicationMembers(JSON.parse(res.data.members));
       })
@@ -110,7 +114,7 @@ export default function WorkerInfo() {
           </div>
         </div>
       </div>
-      {selectedTab == "info" ? (
+      {selectedTab == "info" && gymInfo ? (
         <div className="flex flex-row space-x-4 pl-[10%] pr-[10%] pb-[5%] mt-10">
           <div className="w-full">
             <Image
@@ -156,7 +160,14 @@ export default function WorkerInfo() {
                   </div>
                 ) : (
                   applicationMembers.map((user) => {
-                    return <ApplicationInfo user={user} />;
+                    return (
+                      <ApplicationInfo
+                        user={user}
+                        loadGymMembers={loadGymMembers}
+                        loadGymApplications={loadGymApplication}
+                        key={user.id}
+                      />
+                    );
                   })
                 )}
               </div>
@@ -164,13 +175,43 @@ export default function WorkerInfo() {
           </div>
           <div>
             <div className="flex flex-col space-y-2">
-              <div className="flex flex-row space-x-2">
-                <UserGroupIcon className="w-6 fill-white" />
-                <h2 className="text-white font-semibold text-xl ml-2">
-                  Članovi
-                </h2>
+              <div className="flex flex-row justify-between items-center">
+                <div className="flex flex-row space-x-2">
+                  <UserGroupIcon className="w-6 fill-white" />
+                  <h2 className="text-white font-semibold text-xl ml-2">
+                    Članovi
+                  </h2>
+                </div>
+                <div className="flex flex-row space-x-2 items-center">
+                  <MagnifyingGlassIcon className="w-6 fill-white" />
+                  <input
+                    type="text"
+                    name="nameSample"
+                    id="nameSample"
+                    placeholder="Unesite ime ili prezime..."
+                    className="rounded-lg p-1 pl-2 bg-slate-100 w-52 text-black"
+                    onChange={(e) => loadGymMembers(e.target.value)}
+                  />
+                </div>
               </div>
               <hr className="opacity-20" />
+              <div className="flex flex-col space-y-2 px-[10%] pt-3">
+                {members.length === 0 ? (
+                  <div className="text-center">
+                    Trenutno nema učlanjenih korisnika!
+                  </div>
+                ) : (
+                  members.map((user) => {
+                    return (
+                      <MemberInfo
+                        user={user}
+                        loadGymMembers={loadGymMembers}
+                        key={user.id}
+                      />
+                    );
+                  })
+                )}
+              </div>
             </div>
           </div>
         </div>
