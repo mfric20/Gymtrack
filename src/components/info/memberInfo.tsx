@@ -1,11 +1,34 @@
-import { useState } from "react";
+import Image from "next/image";
+import axios from "axios";
+import { useRouter } from "next/router";
+import { useState, useEffect } from "react";
 import {
   InformationCircleIcon,
   ListBulletIcon,
 } from "@heroicons/react/24/solid";
+import { teretana_info } from "@/types/gym";
 
 export default function MemberInfo() {
   const [selectedTab, setSelectedTab] = useState<string>("info");
+  const [gymInfo, setGymInfo] = useState<teretana_info>();
+
+  const router = useRouter();
+  const gymId = router.query.id;
+
+  useEffect(() => {
+    loadGymInfo();
+  }, []);
+
+  const loadGymInfo = async () => {
+    await axios
+      .get("/api/gym/" + gymId + "/getInfo")
+      .then((res) => {
+        setGymInfo(JSON.parse(res.data.teretana));
+      })
+      .catch((error) => {
+        console.log(`Došlo je do pogreške! | Poruka: ${error}`);
+      });
+  };
 
   return (
     <div className="flex flex-col">
@@ -37,8 +60,37 @@ export default function MemberInfo() {
           </div>
         </div>
       </div>
-
-      <div>Tu su opće informacije o teretani</div>
+      {selectedTab == "info" && gymInfo ? (
+        <div className="flex flex-row space-x-4 pl-[10%] pr-[10%] pb-[5%] mt-10">
+          <div className="w-full">
+            <Image
+              alt="slika_teretane"
+              src={gymInfo?.slika}
+              width={300}
+              height={300}
+              className="rounded-md shadow-lg mx-auto"
+            />
+          </div>
+          <div className="w-full flex flex-col justify-center pt-6 pb-10 space-y-4">
+            <div>
+              <label className="text-white text-lg">Naziv:</label>
+              <p className="ml-4">{gymInfo?.naziv}</p>
+            </div>
+            <div>
+              <label className="text-white text-lg">Adresa:</label>
+              <p className="ml-4">{gymInfo?.adresa}</p>
+            </div>
+            <div>
+              <label className="text-white text-lg">Vaša uloga:</label>
+              <p className="ml-4">Član</p>
+            </div>
+          </div>
+        </div>
+      ) : selectedTab == "termini" ? (
+        <div>Ovo su termini</div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 }
