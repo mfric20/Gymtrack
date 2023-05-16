@@ -27,6 +27,8 @@ export const authOptions: NextAuthOptions = {
           });
 
           if (korisnik == null) return null;
+          if (korisnik.aktiviran == 0) return null;
+
           const passwordMatch = bcrypt.compareSync(lozinka, korisnik.lozinka);
 
           if (!passwordMatch) return null;
