@@ -1,3 +1,7 @@
+import axios from "axios";
+import Image from "next/image";
+import ApplicationInfo from "../cards/applicationInfo";
+import MemberInfo from "../cards/memberInfo";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { teretana_info } from "@/types/gym";
@@ -9,10 +13,6 @@ import {
   MagnifyingGlassIcon,
 } from "@heroicons/react/24/solid";
 import { korisnik } from "@prisma/client";
-import ApplicationInfo from "../cards/applicationInfo";
-import axios from "axios";
-import Image from "next/image";
-import MemberInfo from "../cards/memberInfo";
 
 export default function WorkerInfo() {
   const [selectedTab, setSelectedTab] = useState<string>("info");
