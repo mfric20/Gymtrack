@@ -30,6 +30,30 @@ export default function MemberInfo() {
       });
   };
 
+  const handleWorkerApplication = async () => {
+    await axios
+      .post(
+        "/api/gym/workerApplication",
+        {
+          gymId: gymId,
+        },
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.log(`Došlo je do pogreške! | Poruka: ${error}`);
+      });
+
+    loadGymInfo();
+  };
+
   return (
     <div className="flex flex-col">
       <div className="flex flex-row justify-center">
@@ -84,6 +108,25 @@ export default function MemberInfo() {
               <label className="text-white text-lg">Vaša uloga:</label>
               <p className="ml-4">Član</p>
             </div>
+
+            {gymInfo.korisnik_teretana[0]?.zahtjevDjelatnika === true ? (
+              <div className="flex flex-col space-y-2">
+                <p className="text-red-600">Zahtjev za djelatnika je poslan!</p>
+                <button
+                  className="bg-green-600 text-white p-2 pr-4 pl-4 rounded-lg hover:bg-green-500 h-10 shadow-lg w-56 text-sm font-semibold disabled:bg-slate-500"
+                  disabled
+                >
+                  Pošalji zahtjev za djelatnika!
+                </button>
+              </div>
+            ) : (
+              <button
+                className="bg-green-600 text-white p-2 pr-4 pl-4 rounded-lg hover:bg-green-500 h-10 shadow-lg w-56 text-sm font-semibold"
+                onClick={handleWorkerApplication}
+              >
+                Pošalji zahtjev za djelatnika!
+              </button>
+            )}
           </div>
         </div>
       ) : selectedTab == "termini" ? (

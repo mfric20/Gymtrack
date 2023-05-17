@@ -8,7 +8,7 @@ datasource db {
 }
 
 model korisnik {
-  id                String                 @id @default(uuid())
+  id                String              @id @default(uuid())
   ime               String
   prezime           String
   email             String              @unique(map: "sqlite_autoindex_korisnik_2")
@@ -21,13 +21,14 @@ model korisnik {
 }
 
 model korisnik_teretana {
-  korisnik_id String
-  teretana_id String
-  uloga_id    Int?
-  odobren     Boolean?
-  uloga       uloga?   @relation(fields: [uloga_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  korisnik    korisnik @relation(fields: [korisnik_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  teretana    teretana @relation(fields: [teretana_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  korisnik_id       String
+  teretana_id       String
+  uloga_id          Int?
+  odobren           Boolean?
+  zahtjevDjelatnika Boolean? @default(false)
+  uloga             uloga?   @relation(fields: [uloga_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  korisnik          korisnik @relation(fields: [korisnik_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  teretana          teretana @relation(fields: [teretana_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@id([korisnik_id, teretana_id])
 }
@@ -42,7 +43,7 @@ model korisnik_termin {
 }
 
 model teretana {
-  id                String                 @id @default(uuid())
+  id                String              @id @default(uuid())
   naziv             String
   adresa            String
   slika             String?
