@@ -181,7 +181,7 @@ export default function OwnerInfo() {
             </div>
             <div>
               <label className="text-white text-lg">Vaša uloga:</label>
-              <p className="ml-4">Djelatnik</p>
+              <p className="ml-4">Vlasnik</p>
             </div>
           </div>
         </div>
