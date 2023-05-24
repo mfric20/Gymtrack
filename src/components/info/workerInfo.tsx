@@ -11,6 +11,9 @@ import {
   UserGroupIcon,
   UserPlusIcon,
   MagnifyingGlassIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  PlusIcon,
 } from "@heroicons/react/24/solid";
 import { korisnik } from "@prisma/client";
 
@@ -21,6 +24,7 @@ export default function WorkerInfo() {
   const [applicationMembers, setApplicationMembers] = useState<Array<korisnik>>(
     []
   );
+  const [currentDate, setCurrentDate] = useState<Date>(new Date());
 
   const router = useRouter();
   const gymId = router.query.id;
@@ -141,12 +145,59 @@ export default function WorkerInfo() {
           </div>
         </div>
       ) : selectedTab == "termini" ? (
-        <div>Ovo su termini</div>
+        <div className="flex flex-col my-5 space-y-4">
+          <div className="flex flex-col space-y-1">
+            <div className="flex justify-center text-slate-200 font-semibold text-lg select-none">
+              Datum
+            </div>
+            <div className="flex justify-center flex-row space-x-2">
+              <ChevronLeftIcon
+                className="w-7 fill-slate-400 hover:cursor-pointer hover:fill-white border-2 border-slate-300 border-opacity-40 shadow-lg rounded-sm"
+                onClick={() =>
+                  setCurrentDate(
+                    new Date(currentDate.setDate(currentDate.getDate() - 1))
+                  )
+                }
+              />
+              <p className="text-gray-200 w-min border-2 pt-2 pb-2 pr-5 pl-5 rounded-sm bg-opacity-40 border-slate-300 shadow-lg bg-slate-700 border-opacity-40 select-none">
+                {currentDate.getDate() +
+                  "." +
+                  (currentDate.getMonth() + 1) +
+                  "." +
+                  currentDate.getFullYear() +
+                  "."}
+              </p>
+              <ChevronRightIcon
+                className="w-7 fill-slate-400 hover:cursor-pointer hover:fill-white border-2 border-slate-300 border-opacity-40 shadow-lg rounded-sm"
+                onClick={() =>
+                  setCurrentDate(
+                    new Date(currentDate.setDate(currentDate.getDate() + 1))
+                  )
+                }
+              />
+            </div>
+          </div>
+          <div className="flex flex-col space-y-3">
+            <div className="flex flex-row justify-between">
+              <div className="flex flex-row space-x-2 ml-4">
+                <ListBulletIcon className="w-6 fill-white" />
+                <h2 className="text-white font-semibold text-xl ml-2 h-fit m-auto select-none">
+                  Termini
+                </h2>
+              </div>
+              <button className="mr-4 py-2 px-6 bg-green-600 text-white rounded-md shadow-md hover:bg-green-500 font-semibold flex flex-row space-x-2 items-center">
+                <PlusIcon className="w-5" />
+                <h2 className="select-none">Dodaj termin</h2>
+              </button>
+            </div>
+            <hr className="opacity-20" />
+          </div>
+        </div>
       ) : (
         <div className="flex flex-col mt-6 space-y-10">
           <div>
             <div className="flex flex-col space-y-2">
-              <div className="flex flex-row space-x-2">
+              <div className="flex flex-row space-x-2 ml-4">
                 <UserPlusIcon className="w-6 fill-white" />
                 <h2 className="text-white font-semibold text-xl ml-2">
                   Zahtjevi za učlanjivanje
@@ -176,13 +227,13 @@ export default function WorkerInfo() {
           <div>
             <div className="flex flex-col space-y-2">
               <div className="flex flex-row justify-between items-center">
-                <div className="flex flex-row space-x-2">
+                <div className="flex flex-row space-x-2 ml-4">
                   <UserGroupIcon className="w-6 fill-white" />
                   <h2 className="text-white font-semibold text-xl ml-2">
                     Članovi
                   </h2>
                 </div>
-                <div className="flex flex-row space-x-2 items-center">
+                <div className="flex flex-row space-x-2 items-center mr-4">
                   <MagnifyingGlassIcon className="w-6 fill-white" />
                   <input
                     type="text"

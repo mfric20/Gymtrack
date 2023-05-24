@@ -121,10 +121,12 @@ export default function WorkerApplicationInfo({
         >
           <AlertDialogOverlay />
 
-          <AlertDialogContent>
-            <AlertDialogHeader>Jeste li sigurni?</AlertDialogHeader>
-            <AlertDialogCloseButton />
-            <AlertDialogBody>
+          <AlertDialogContent backgroundColor="#1F2937">
+            <AlertDialogHeader color="white">
+              Jeste li sigurni?
+            </AlertDialogHeader>
+            <AlertDialogCloseButton color="white" />
+            <AlertDialogBody color="white">
               Jeste li sigurni da želite prihvatiti ovu prijavu za djelatnika
               teretane?
             </AlertDialogBody>
@@ -148,10 +150,12 @@ export default function WorkerApplicationInfo({
         >
           <AlertDialogOverlay />
 
-          <AlertDialogContent>
-            <AlertDialogHeader>Jeste li sigurni?</AlertDialogHeader>
-            <AlertDialogCloseButton />
-            <AlertDialogBody>
+          <AlertDialogContent backgroundColor="#1F2937">
+            <AlertDialogHeader color="white">
+              Jeste li sigurni?
+            </AlertDialogHeader>
+            <AlertDialogCloseButton color="white" />
+            <AlertDialogBody color="white">
               Jeste li sigurni da želite odbiti ovu prijavu za djelatnika
               teretane?
             </AlertDialogBody>

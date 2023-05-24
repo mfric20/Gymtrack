@@ -88,10 +88,12 @@ export default function MemberInfo({
         >
           <AlertDialogOverlay />
 
-          <AlertDialogContent>
-            <AlertDialogHeader>Jeste li sigurni?</AlertDialogHeader>
-            <AlertDialogCloseButton />
-            <AlertDialogBody>
+          <AlertDialogContent backgroundColor="#1F2937">
+            <AlertDialogHeader color="white">
+              Jeste li sigurni?
+            </AlertDialogHeader>
+            <AlertDialogCloseButton color="white" />
+            <AlertDialogBody color="white">
               Jeste li sigurni da želite izbrisati ovog člana?
             </AlertDialogBody>
             <AlertDialogFooter>

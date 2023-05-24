@@ -53,10 +53,13 @@ model teretana {
 
 model termin {
   id              Int               @id @unique(map: "sqlite_autoindex_termin_1") @default(autoincrement())
+  datum           String
   pocetak         String
   kraj            String
   maksimalan_broj Int
   teretana_id     String
+  kreirao         String
+  obrisan         Boolean
   korisnik_termin korisnik_termin[]
   teretana        teretana          @relation(fields: [teretana_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
