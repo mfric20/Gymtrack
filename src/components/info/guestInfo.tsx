@@ -75,11 +75,11 @@ export default function GuestInfo() {
               <div className="flex flex-col space-y-4">
                 <div>
                   <label className="text-white text-lg">Naziv:</label>
-                  <p className="ml-4">{gymInfo.naziv}</p>
+                  <p className="ml-4 text-gray-300">{gymInfo.naziv}</p>
                 </div>
                 <div>
                   <label className="text-white text-lg">Adresa:</label>
-                  <p className="ml-4">{gymInfo.adresa}</p>
+                  <p className="ml-4 text-gray-300">{gymInfo.adresa}</p>
                 </div>
               </div>
               {gymInfo.korisnik_teretana[0]?.odobren === false ? (

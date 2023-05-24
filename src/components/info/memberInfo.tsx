@@ -98,15 +98,15 @@ export default function MemberInfo() {
           <div className="w-full flex flex-col justify-center pt-6 pb-10 space-y-4">
             <div>
               <label className="text-white text-lg">Naziv:</label>
-              <p className="ml-4">{gymInfo?.naziv}</p>
+              <p className="ml-4 text-gray-300">{gymInfo?.naziv}</p>
             </div>
             <div>
               <label className="text-white text-lg">Adresa:</label>
-              <p className="ml-4">{gymInfo?.adresa}</p>
+              <p className="ml-4 text-gray-300">{gymInfo?.adresa}</p>
             </div>
             <div>
               <label className="text-white text-lg">Vaša uloga:</label>
-              <p className="ml-4">Član</p>
+              <p className="ml-4 text-gray-300">Član</p>
             </div>
 
             {gymInfo.korisnik_teretana[0]?.zahtjevDjelatnika === true ? (

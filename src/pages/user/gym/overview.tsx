@@ -64,7 +64,7 @@ export default function Overview() {
                 return <GymInfo gymInfo={gym} key={gym.id} />;
               })
             ) : (
-              <>Loading...</>
+              <div className="text-gray-400">Loading...</div>
             )}
           </div>
         </div>

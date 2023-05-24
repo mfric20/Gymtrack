@@ -173,15 +173,15 @@ export default function OwnerInfo() {
           <div className="w-full flex flex-col justify-center pt-6 pb-10 space-y-4">
             <div>
               <label className="text-white text-lg">Naziv:</label>
-              <p className="ml-4">{gymInfo?.naziv}</p>
+              <p className="ml-4 text-gray-300">{gymInfo?.naziv}</p>
             </div>
             <div>
               <label className="text-white text-lg">Adresa:</label>
-              <p className="ml-4">{gymInfo?.adresa}</p>
+              <p className="ml-4 text-gray-300">{gymInfo?.adresa}</p>
             </div>
             <div>
               <label className="text-white text-lg">Vaša uloga:</label>
-              <p className="ml-4">Vlasnik</p>
+              <p className="ml-4 text-gray-300">Vlasnik</p>
             </div>
           </div>
         </div>
@@ -200,7 +200,7 @@ export default function OwnerInfo() {
               <hr className="opacity-20" />
               <div className="flex flex-col space-y-2 px-[10%] pt-3">
                 {applicationMembers.length === 0 ? (
-                  <div className="text-center">
+                  <div className="text-center text-gray-300">
                     Trenutno nema novih zahtjeva za učlanjivanje!
                   </div>
                 ) : (
@@ -242,7 +242,7 @@ export default function OwnerInfo() {
               <hr className="opacity-20" />
               <div className="flex flex-col space-y-2 px-[10%] pt-3">
                 {members.length === 0 ? (
-                  <div className="text-center">
+                  <div className="text-center text-gray-300">
                     Trenutno nema učlanjenih korisnika!
                   </div>
                 ) : (
@@ -273,7 +273,7 @@ export default function OwnerInfo() {
               <hr className="opacity-20" />
               <div className="flex flex-col space-y-2 px-[10%] pt-3">
                 {applicationMembers.length === 0 ? (
-                  <div className="text-center">
+                  <div className="text-center text-gray-300">
                     Trenutno nema novih zahtjeva za djelatnika!
                   </div>
                 ) : (
@@ -315,7 +315,7 @@ export default function OwnerInfo() {
               <hr className="opacity-20" />
               <div className="flex flex-col space-y-2 px-[10%] pt-3">
                 {workers.length === 0 ? (
-                  <div className="text-center">
+                  <div className="text-center text-gray-300">
                     Trenutno nema djelatnika ove teretane!
                   </div>
                 ) : (

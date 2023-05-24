@@ -1,6 +1,18 @@
 import { korisnik } from "@prisma/client";
 import { TrashIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/router";
+import { useRef } from "react";
+import {
+  useDisclosure,
+  AlertDialog,
+  Button,
+  AlertDialogHeader,
+  AlertDialogFooter,
+  AlertDialogOverlay,
+  AlertDialogContent,
+  AlertDialogCloseButton,
+  AlertDialogBody,
+} from "@chakra-ui/react";
 import default_profil_pic from "@/assets/default_profile_pic.jpg";
 import Image from "next/image";
 import axios from "axios";
@@ -13,12 +25,15 @@ export default function MemberInfo({
   loadGymMembers: (searchSample: string) => Promise<void>;
 }) {
   const router = useRouter();
-  const handleDeleteClick = async (userId: string) => {
+  const modalDelete = useDisclosure();
+  const cancelRef = useRef();
+
+  const handleDeleteClick = async () => {
     const id = router.query.id;
     await axios
       .delete("/api/gym/" + id + "/members/members", {
         data: {
-          userId: userId,
+          userId: user.id,
         },
         headers: {
           Accept: "application/json",
@@ -46,24 +61,49 @@ export default function MemberInfo({
         <div className="flex flex-col">
           <div>
             <label className="text-white text-base">Ime i prezime:</label>
-            <p className="ml-4">
+            <p className="ml-4 text-gray-300">
               {user?.ime} {user?.prezime}
             </p>
           </div>
           <div>
             <label className="text-white text-base">Email adresa:</label>
-            <p className="ml-4">{user?.email}</p>
+            <p className="ml-4 text-gray-300">{user?.email}</p>
           </div>
         </div>
       </div>
       <div className="flex items-center">
         <button
           className="p-2 px-6 bg-red-600 text-white rounded-md shadow-md hover:bg-red-500 font-semibold flex flex-row space-x-2 items-center"
-          onClick={() => handleDeleteClick(user.id)}
+          onClick={modalDelete.onOpen}
         >
           <TrashIcon className="w-5" />
           <h2>Izbriši</h2>
         </button>
+        <AlertDialog
+          motionPreset="slideInBottom"
+          leastDestructiveRef={cancelRef}
+          onClose={modalDelete.onClose}
+          isOpen={modalDelete.isOpen}
+          isCentered
+        >
+          <AlertDialogOverlay />
+
+          <AlertDialogContent>
+            <AlertDialogHeader>Jeste li sigurni?</AlertDialogHeader>
+            <AlertDialogCloseButton />
+            <AlertDialogBody>
+              Jeste li sigurni da želite izbrisati ovog člana?
+            </AlertDialogBody>
+            <AlertDialogFooter>
+              <Button ref={cancelRef} onClick={modalDelete.onClose}>
+                Ne
+              </Button>
+              <Button colorScheme="red" ml={3} onClick={handleDeleteClick}>
+                Da
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
     </div>
   );

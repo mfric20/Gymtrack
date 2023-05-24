@@ -86,7 +86,7 @@ export default function Index() {
             ) : guest === true ? (
               <GuestInfo />
             ) : (
-              <div>Loading...</div>
+              <div className="text-gray-400">Loading...</div>
             )}
           </div>
         </div>
