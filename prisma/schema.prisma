@@ -18,6 +18,7 @@ model korisnik {
   aktivacijski_kod  Int
   korisnik_teretana korisnik_teretana[]
   korisnik_termin   korisnik_termin[]
+  termin            termin[]
 }
 
 model korisnik_teretana {
@@ -62,6 +63,7 @@ model termin {
   obrisan         Boolean
   korisnik_termin korisnik_termin[]
   teretana        teretana          @relation(fields: [teretana_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  korisnik        korisnik          @relation(fields: [kreirao], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model uloga {
