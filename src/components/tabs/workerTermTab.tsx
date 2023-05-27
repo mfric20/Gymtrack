@@ -24,7 +24,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { termin } from "@prisma/client";
 
 export default function WorkerTerm() {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
@@ -40,6 +41,8 @@ export default function WorkerTerm() {
   const [startTimeError, setStartTimeError] = useState<Boolean>(false);
   const [endTimeError, setEndTimeError] = useState<Boolean>(false);
   const [maxNumberError, setMaxNumberError] = useState<Boolean>(false);
+  //Terms
+  const [terms, setTerms] = useState<termin[]>();
 
   const session = useSession();
   const router = useRouter();
@@ -101,6 +104,25 @@ export default function WorkerTerm() {
           console.log(`Došlo je do pogreške! | Poruka: ${error}`);
         });
     } else setErrorMessage(errorMess.substring(0, errorMess.length - 2));
+  };
+
+  useEffect(() => {
+    loadCurrentTerms();
+  }, [currentDate]);
+
+  const loadCurrentTerms = async () => {
+    await axios
+      .get(
+        "/api/gym/" +
+          gymId +
+          `/terms?currentDate=${currentDate}&createdBy=${session.data.user.id}`
+      )
+      .then((res) => {
+        setTerms(JSON.parse(res.data.terms));
+      })
+      .catch((error) => {
+        console.log(`Došlo je do pogreške! | Poruka: ${error}`);
+      });
   };
 
   return (
