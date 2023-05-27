@@ -23,6 +23,7 @@ import {
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 import { useState } from "react";
 
 export default function WorkerTerm() {
@@ -40,6 +41,7 @@ export default function WorkerTerm() {
   const [endTimeError, setEndTimeError] = useState<Boolean>(false);
   const [maxNumberError, setMaxNumberError] = useState<Boolean>(false);
 
+  const session = useSession();
   const router = useRouter();
   const gymId = router.query.id;
 
@@ -76,8 +78,29 @@ export default function WorkerTerm() {
     } else setMaxNumberError(false);
 
     if (errorMess.length === 0) {
-      //Handle submit
-      onClose();
+      await axios
+        .post(
+          "/api/gym/" + gymId + "/terms/term",
+          {
+            startDate,
+            startTime,
+            endTime,
+            maxNumber,
+            createdBy: session.data.user.id,
+          },
+          {
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        .then((res) => {
+          onClose();
+        })
+        .catch((error) => {
+          console.log(`Došlo je do pogreške! | Poruka: ${error}`);
+        });
     } else setErrorMessage(errorMess.substring(0, errorMess.length - 2));
   };
 
