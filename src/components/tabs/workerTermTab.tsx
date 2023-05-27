@@ -46,7 +46,6 @@ export default function WorkerTerm() {
   const gymId = router.query.id;
 
   const handleSaveClick = async () => {
-    console.log(startDate);
     let errorMess = "";
     if (startDate == undefined) {
       setStartDateError(true);
