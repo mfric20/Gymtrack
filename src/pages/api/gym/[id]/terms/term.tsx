@@ -66,5 +66,35 @@ export default async function handler(
         error: `Greška kod API zahtjeva za kreiranje termina!  | Poruka ${error}`,
       });
     }
+  } else if (req.method === "DELETE") {
+    try {
+      if (session) {
+        console.info("API zahtjev za brisanje termina!");
+        const { termId } = req.body;
+        const updatedTerm = await prisma.termin.update({
+          where: {
+            id: termId,
+          },
+          data: {
+            obrisan: true,
+          },
+        });
+        if (updatedTerm)
+          return res.status(200).json({ message: "Termin je obrisan!" });
+        else
+          return res
+            .status(500)
+            .json({ error: "Dogodila se greška kod brisanja!" });
+      } else {
+        return res.status(401).json({ error: "Nema sesije!" });
+      }
+    } catch (error) {
+      console.error(
+        `Greška kod API zahtjeva za brisanje termina! | Poruka ${error}`
+      );
+      return res.status(400).json({
+        error: `Greška kod API zahtjeva za brisanje termina!  | Poruka ${error}`,
+      });
+    }
   }
 }

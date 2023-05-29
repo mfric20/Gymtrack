@@ -22,6 +22,7 @@ import {
 } from "@heroicons/react/24/solid";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import TermInfo from "@/components/cards/termInfo";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
@@ -42,7 +43,7 @@ export default function WorkerTerm() {
   const [endTimeError, setEndTimeError] = useState<Boolean>(false);
   const [maxNumberError, setMaxNumberError] = useState<Boolean>(false);
   //Terms
-  const [terms, setTerms] = useState<termin[]>();
+  const [terms, setTerms] = useState<termin[]>([]);
 
   const session = useSession();
   const router = useRouter();
@@ -167,7 +168,7 @@ export default function WorkerTerm() {
             </h2>
           </div>
           <button
-            className="mr-4 py-2 px-6 bg-green-600 text-white rounded-md shadow-md hover:bg-green-500 font-semibold flex flex-row space-x-2 items-center"
+            className="mr-4 py-2 px-6 bg-green-600 text-white rounded-md shadow-md hover:bg-green-700 font-semibold flex flex-row space-x-2 items-center"
             onClick={() => onOpen()}
           >
             <PlusIcon className="w-5" />
@@ -303,6 +304,23 @@ export default function WorkerTerm() {
           </ModalFooter>
         </ModalContent>
       </Modal>
+      <div className="flex flex-col space-y-4 mx-28">
+        {terms.length == 0 ? (
+          <div className="text-white text-center">
+            Za ovaj dan nema definiranih termina!
+          </div>
+        ) : (
+          terms.map((term) => {
+            return (
+              <TermInfo
+                term={term}
+                loadCurrentTerms={loadCurrentTerms}
+                key={term.id}
+              />
+            );
+          })
+        )}
+      </div>
     </div>
   );
 }
