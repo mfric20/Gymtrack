@@ -1,8 +1,8 @@
-import { termin } from "@prisma/client";
+import { korisnik, termin } from "@prisma/client";
 import { TrashIcon } from "@heroicons/react/24/solid";
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import {
   useDisclosure,
   AlertDialog,
@@ -13,6 +13,12 @@ import {
   AlertDialogContent,
   AlertDialogCloseButton,
   AlertDialogBody,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
 } from "@chakra-ui/react";
 import Image from "next/image";
 import axios from "axios";
@@ -25,8 +31,11 @@ export default function TermInfo({
   term: termin;
   loadCurrentTerms: () => Promise<void>;
 }) {
+  const [termUsers, setTermUsers] = useState<korisnik[]>([]);
+
   const router = useRouter();
   const modalDelete = useDisclosure();
+  const modalInfo = useDisclosure();
   const cancelRef = useRef();
 
   const handleDeleteClick = async () => {
@@ -48,6 +57,20 @@ export default function TermInfo({
       .catch((error) => {
         console.log(`Došlo je do pogreške! | Poruka: ${error}`);
       });
+  };
+
+  const handleGetTermUsers = async () => {
+    const id = router.query.id;
+    await axios
+      .get("/api/gym/" + id + "/terms/users?termId=" + term.id)
+      .then((res) => {
+        console.log(res);
+        // TODO: napraviti spremanje u termUsers state
+      })
+      .catch((error) => {
+        console.log(`Došlo je do pogreške! | Poruka: ${error}`);
+      });
+    modalInfo.onOpen();
   };
 
   return (
@@ -74,7 +97,10 @@ export default function TermInfo({
         </div>
       </div>
       <div className="flex justify-center space-y-2 flex-col">
-        <button className="p-2 px-6 bg-slate-600  text-white rounded-md shadow-md hover:bg-slate-700 font-semibold flex flex-row space-x-2 items-center">
+        <button
+          className="p-2 px-6 bg-slate-600  text-white rounded-md shadow-md hover:bg-slate-700 font-semibold flex flex-row space-x-1 items-center"
+          onClick={handleGetTermUsers}
+        >
           <InformationCircleIcon className="w-6" />
           <h2>Detalji</h2>
         </button>
@@ -111,6 +137,17 @@ export default function TermInfo({
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      <Modal onClose={modalInfo.onClose} size="3xl" isOpen={modalInfo.isOpen}>
+        <ModalOverlay />
+        <ModalContent backgroundColor="#1F2937">
+          <ModalHeader color="white">Detalji termina</ModalHeader>
+          <ModalCloseButton color="white" />
+          <ModalBody color="white">
+            <div className="flex flex-col space-y-4">{term.datum}</div>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     </div>
   );
 }

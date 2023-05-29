@@ -79,6 +79,7 @@ export default function WorkerInfo({
           <TrashIcon className="w-5" />
           <h2>Izbriši</h2>
         </button>
+
         <AlertDialog
           motionPreset="slideInBottom"
           leastDestructiveRef={cancelRef}

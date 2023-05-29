@@ -53,8 +53,12 @@ export default async function handler(
             teretana_id: id as string,
           },
         });
-
-        return res.status(200).json({ message: "Termin je dodan!" });
+        if (newTerm)
+          return res.status(200).json({ message: "Termin je dodan!" });
+        else
+          return res
+            .status(500)
+            .json({ error: "Greška kod dodavanja termina!" });
       } else {
         return res.status(401).json({ error: "Nema sesije!" });
       }

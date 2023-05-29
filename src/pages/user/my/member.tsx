@@ -32,7 +32,7 @@ export default function Member() {
   };
 
   return (
-    <div className="bg-gradient-to-tr from-slate-700 to-slate-900 h-screen flex flex-col justify-between">
+    <div className="bg-gradient-to-tr from-slate-700 to-slate-900 min-h-screen flex flex-col justify-between overflow-hidden">
       <div>
         <LoggedInNavigation />
         <div className="mt-20 mb-20 flex flex-col space-y-10 lg:ml-[15%] lg:mr-[15%] ml-5 mr-5 p-5 border-2 border-slate-400 rounded-md border-opacity-5 shadow-md bg-slate-100 bg-opacity-5">

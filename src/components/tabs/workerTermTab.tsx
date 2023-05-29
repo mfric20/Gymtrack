@@ -22,7 +22,7 @@ import {
 } from "@heroicons/react/24/solid";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import TermInfo from "@/components/cards/termInfo";
+import TermInfo from "@/components/cards/termInfoWorker";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
@@ -116,7 +116,7 @@ export default function WorkerTerm() {
       .get(
         "/api/gym/" +
           gymId +
-          `/terms?currentDate=${currentDate}&createdBy=${session.data.user.id}`
+          `/terms/worker?currentDate=${currentDate}&createdBy=${session.data.user.id}`
       )
       .then((res) => {
         setTerms(JSON.parse(res.data.terms));
