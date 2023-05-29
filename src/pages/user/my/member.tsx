@@ -48,14 +48,16 @@ export default function Member() {
           <div className="flex flex-wrap mx-auto">
             {memberGyms != undefined ? (
               memberGyms.length == 0 ? (
-                <div>Trenutno niste član ni jedne teretane!</div>
+                <div className="text-white">
+                  Trenutno niste član ni jedne teretane!
+                </div>
               ) : (
                 memberGyms.map((gym) => {
                   return <GymInfo gymInfo={gym} key={gym.id} />;
                 })
               )
             ) : (
-              <>Loading...</>
+              <div className="text-gray-400">Loading...</div>
             )}
           </div>
         </div>

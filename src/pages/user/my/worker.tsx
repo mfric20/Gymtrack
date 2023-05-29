@@ -48,14 +48,16 @@ export default function Worker() {
           <div className="flex flex-wrap mx-auto">
             {workerGyms != undefined ? (
               workerGyms.length == 0 ? (
-                <div>Trenutno niste djelatnik ni jedne teretane!</div>
+                <div className="text-white">
+                  Trenutno niste djelatnik ni jedne teretane!
+                </div>
               ) : (
                 workerGyms.map((gym) => {
                   return <GymInfo gymInfo={gym} key={gym.id} />;
                 })
               )
             ) : (
-              <>Loading...</>
+              <div className="text-gray-400">Loading...</div>
             )}
           </div>
         </div>

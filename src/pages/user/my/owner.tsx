@@ -58,11 +58,17 @@ export default function Owner() {
           </div>
           <div className="flex flex-wrap mx-auto">
             {ownerGyms != undefined ? (
-              ownerGyms.map((gym) => {
-                return <GymInfo gymInfo={gym} key={gym.id} />;
-              })
+              ownerGyms.length == 0 ? (
+                <div className="text-white">
+                  Trenutno niste vlasnik ni jedne teretane!
+                </div>
+              ) : (
+                ownerGyms.map((gym) => {
+                  return <GymInfo gymInfo={gym} key={gym.id} />;
+                })
+              )
             ) : (
-              <>Loading...</>
+              <div className="text-gray-400">Loading...</div>
             )}
           </div>
         </div>
