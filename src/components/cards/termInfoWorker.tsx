@@ -23,6 +23,7 @@ import {
 import Image from "next/image";
 import axios from "axios";
 import termIcon from "@/assets/termIcon.png";
+import TermDetails from "@/components/cards/termDetails";
 
 export default function TermInfo({
   term,
@@ -64,13 +65,16 @@ export default function TermInfo({
     await axios
       .get("/api/gym/" + id + "/terms/users?termId=" + term.id)
       .then((res) => {
-        console.log(res);
-        // TODO: napraviti spremanje u termUsers state
+        setTermUsers(JSON.parse(res.data.users));
       })
       .catch((error) => {
         console.log(`Došlo je do pogreške! | Poruka: ${error}`);
       });
     modalInfo.onOpen();
+  };
+
+  const reloadTerms = async () => {
+    loadCurrentTerms();
   };
 
   return (
@@ -144,7 +148,11 @@ export default function TermInfo({
           <ModalHeader color="white">Detalji termina</ModalHeader>
           <ModalCloseButton color="white" />
           <ModalBody color="white">
-            <div className="flex flex-col space-y-4">{term.datum}</div>
+            <TermDetails
+              term={term}
+              termUsers={termUsers}
+              reloadTerms={reloadTerms}
+            />
           </ModalBody>
         </ModalContent>
       </Modal>

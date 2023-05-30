@@ -6,6 +6,7 @@ import { authOptions } from "../../../auth/[...nextauth]";
 
 type Data = {
   error?: string;
+  message?: string;
   terms?: string;
   id?: number;
 };
@@ -52,6 +53,50 @@ export default async function handler(
       );
       return res.status(400).json({
         error: `Greška kod API zahtjeva za dohvacanje svih termina!  | Poruka ${error}`,
+      });
+    }
+  } else if (req.method === "POST") {
+    try {
+      if (session) {
+        console.info("API zahtjev za izmjenu podataka o terminu!");
+        const { startDate, startTime, endTime, maxNumber, termId } = req.body;
+
+        let startDateString = new Date(startDate).toLocaleDateString();
+        let startTimeString = new Date(startTime).toLocaleTimeString();
+        let endTimeString = new Date(endTime).toLocaleTimeString();
+        const maxNumberInt = parseInt(maxNumber);
+
+        startDateString = startDateString.replaceAll(" ", "");
+        startTimeString = startTimeString.substring(
+          0,
+          startTimeString.length - 3
+        );
+        endTimeString = endTimeString.substring(0, endTimeString.length - 3);
+
+        const changedTerm = await prisma.termin.update({
+          where: {
+            id: parseInt(termId as string),
+          },
+          data: {
+            datum: startDateString,
+            pocetak: startTimeString,
+            kraj: endTimeString,
+            maksimalan_broj: maxNumberInt,
+          },
+        });
+        if (changedTerm)
+          return res.status(200).json({ message: "Izmjena uspješna!" });
+        else
+          return res.status(500).json({ error: "Greška kod izmjene termina!" });
+      } else {
+        return res.status(401).json({ error: "Nema sesije!" });
+      }
+    } catch (error) {
+      console.error(
+        `Greška kod API zahtjeva za izmjenu podataka o terminu! | Poruka ${error}`
+      );
+      return res.status(400).json({
+        error: `Greška kod API zahtjeva za izmjenu podataka o terminu!  | Poruka ${error}`,
       });
     }
   }

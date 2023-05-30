@@ -33,7 +33,6 @@ export default function MemberTerm() {
       .get("/api/gym/" + gymId + `/terms/member?currentDate=${currentDate}`)
       .then((res) => {
         setTerms(JSON.parse(res.data.terms));
-        console.log(JSON.parse(res.data.terms));
       })
       .catch((error) => {
         console.log(`Došlo je do pogreške! | Poruka: ${error}`);
