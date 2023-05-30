@@ -118,6 +118,7 @@ export default function TermInfo({
       </div>
       <AlertDialog
         motionPreset="slideInBottom"
+        scrollBehavior={"inside"}
         leastDestructiveRef={cancelRef}
         onClose={modalDelete.onClose}
         isOpen={modalDelete.isOpen}
@@ -142,7 +143,12 @@ export default function TermInfo({
         </AlertDialogContent>
       </AlertDialog>
 
-      <Modal onClose={modalInfo.onClose} size="3xl" isOpen={modalInfo.isOpen}>
+      <Modal
+        closeOnOverlayClick={false}
+        onClose={modalInfo.onClose}
+        size="3xl"
+        isOpen={modalInfo.isOpen}
+      >
         <ModalOverlay />
         <ModalContent backgroundColor="#1F2937">
           <ModalHeader color="white">Detalji termina</ModalHeader>
@@ -152,6 +158,7 @@ export default function TermInfo({
               term={term}
               termUsers={termUsers}
               reloadTerms={reloadTerms}
+              reloadCurrentUsers={handleGetTermUsers}
             />
           </ModalBody>
         </ModalContent>

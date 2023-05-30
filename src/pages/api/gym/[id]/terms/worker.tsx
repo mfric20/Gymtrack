@@ -99,5 +99,37 @@ export default async function handler(
         error: `Greška kod API zahtjeva za izmjenu podataka o terminu!  | Poruka ${error}`,
       });
     }
+  } else if (req.method === "DELETE") {
+    try {
+      if (session) {
+        console.info("API zahtjev za brisanje prijave na termin!");
+        console.log(req.body);
+        const { termId, userId } = req.body;
+
+        const deletedApplication = await prisma.korisnik_termin.delete({
+          where: {
+            korisnik_id_termin_id: {
+              korisnik_id: userId as string,
+              termin_id: parseInt(termId as string),
+            },
+          },
+        });
+        if (deletedApplication)
+          return res.status(200).json({ message: "Brisanje uspješno!" });
+        else
+          return res
+            .status(500)
+            .json({ error: "Greška kod brisanje prijave na termin!" });
+      } else {
+        return res.status(401).json({ error: "Nema sesije!" });
+      }
+    } catch (error) {
+      console.error(
+        `Greška kod API zahtjeva za brisanje prijave na termin! | Poruka ${error}`
+      );
+      return res.status(400).json({
+        error: `Greška kod API zahtjeva za brisanje prijave na termin!  | Poruka ${error}`,
+      });
+    }
   }
 }

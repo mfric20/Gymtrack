@@ -11,10 +11,12 @@ export default function TermDetails({
   term,
   termUsers,
   reloadTerms,
+  reloadCurrentUsers,
 }: {
   term: termin;
   termUsers: korisnik[];
   reloadTerms: () => Promise<void>;
+  reloadCurrentUsers: () => void;
 }) {
   const [selectedTab, setSelectedTab] = useState<string>("detalji");
 
@@ -22,6 +24,9 @@ export default function TermDetails({
     reloadTerms();
   };
 
+  const reloadUsers = () => {
+    reloadCurrentUsers();
+  };
   return (
     <div className="flex flex-col space-y-6">
       <div className="flex flex-row justify-center">
@@ -35,7 +40,7 @@ export default function TermDetails({
         >
           <div className="flex flex-row justify-center space-x-2 drop-shadow-lg">
             <InformationCircleIcon className="w-6" />
-            <span>Detalji termina</span>
+            <span className="select-none">Detalji termina</span>
           </div>
         </div>
         <div
@@ -48,14 +53,18 @@ export default function TermDetails({
         >
           <div className="flex flex-row justify-center space-x-2 drop-shadow-lg">
             <UserGroupIcon className="w-6" />
-            <span>Korisnici</span>
+            <span className="select-none">Korisnici</span>
           </div>
         </div>
       </div>
       {selectedTab === "detalji" ? (
         <TermInfoTab term={term} reloadCurrentTerms={reloadCurrentTerms} />
       ) : (
-        <TermApplicationsTab />
+        <TermApplicationsTab
+          term={term}
+          termUsers={termUsers}
+          reloadUsers={reloadUsers}
+        />
       )}
     </div>
   );
