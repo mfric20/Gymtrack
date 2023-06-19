@@ -1,11 +1,11 @@
 import axios from "axios";
 import default_profil_pic from "@/assets/default_profile_pic.jpg";
 import Image from "next/image";
-import { UserGroupIcon } from "@heroicons/react/24/solid";
+import { UserGroupIcon, MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import { TrashIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/router";
 import { korisnik, termin } from "@prisma/client";
-import { useRef, useState } from "react";
+import { Dispatch, SetStateAction, useRef, useState } from "react";
 import {
   useDisclosure,
   AlertDialog,
@@ -20,10 +20,12 @@ import {
 
 export default function TermApplicationsTab({
   termUsers,
+  setTermUsers,
   reloadUsers,
   term,
 }: {
   termUsers: korisnik[];
+  setTermUsers: Dispatch<SetStateAction<korisnik[]>>;
   reloadUsers: () => void;
   term: termin;
 }) {
@@ -59,6 +61,21 @@ export default function TermApplicationsTab({
     modalDelete.onOpen();
   };
 
+  const filterMembers = (e) => {
+    let input = e.target.value.toString().toLocaleLowerCase();
+    if (input == "") reloadUsers();
+    else {
+      let filteredUsers = termUsers.filter((user) => {
+        return (
+          user.ime.toLocaleLowerCase().includes(input) ||
+          user.prezime.toLocaleLowerCase().includes(input)
+        );
+      });
+
+      setTermUsers(filteredUsers);
+    }
+  };
+
   return (
     <div className="flex flex-col space-y-3">
       <div className="flex justify-center">
@@ -69,11 +86,24 @@ export default function TermApplicationsTab({
           </span>
         </div>
       </div>
-      <div className="flex flex-row space-x-2 ml-4">
-        <UserGroupIcon className="w-6 fill-white" />
-        <h2 className="text-white font-semibold text-xl ml-2 h-fit m-auto select-none">
-          Prijavljeni korisnici
-        </h2>
+      <div className="flex flex-row justify-between">
+        <div className="flex flex-row space-x-2 ml-4">
+          <UserGroupIcon className="w-6 fill-white" />
+          <h2 className="text-white font-semibold text-xl ml-2 h-fit m-auto select-none">
+            Prijavljeni korisnici
+          </h2>
+        </div>
+        <div className="flex flex-row space-x-2 items-center mr-4">
+          <MagnifyingGlassIcon className="w-6 fill-white" />
+          <input
+            type="text"
+            name="nameSample"
+            id="nameSample"
+            placeholder="Unesite ime ili prezime..."
+            className="rounded-lg p-1 pl-2 bg-slate-100 w-52 text-black"
+            onChange={filterMembers}
+          />
+        </div>
       </div>
       <hr className="opacity-20" />
       <div className="my-10">

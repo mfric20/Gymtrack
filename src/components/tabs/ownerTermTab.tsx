@@ -133,15 +133,16 @@ export default function OwnerTerm() {
   const filterTerms = (e) => {
     let input = e.target.value.toString().toLocaleLowerCase();
     if (input == "") loadCurrentTerms();
+    else {
+      let filteredTerms = terms.filter((term) => {
+        return (
+          term.korisnik.ime.toLocaleLowerCase().includes(input) ||
+          term.korisnik.prezime.toLocaleLowerCase().includes(input)
+        );
+      });
 
-    let filteredTerms = terms.filter((term) => {
-      return (
-        term.korisnik.ime.toLocaleLowerCase().includes(input) ||
-        term.korisnik.prezime.toLocaleLowerCase().includes(input)
-      );
-    });
-
-    setTerms(filteredTerms);
+      setTerms(filteredTerms);
+    }
   };
 
   return (

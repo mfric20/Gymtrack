@@ -3,18 +3,20 @@ import {
   InformationCircleIcon,
   UserGroupIcon,
 } from "@heroicons/react/24/solid";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import TermInfoTab from "@/components/tabs/termInfoTab";
 import TermApplicationsTab from "@/components/tabs/termApplicationsTab";
 
 export default function TermDetails({
   term,
   termUsers,
+  setTermUsers,
   reloadTerms,
   reloadCurrentUsers,
 }: {
   term: termin;
   termUsers: korisnik[];
+  setTermUsers: Dispatch<SetStateAction<korisnik[]>>;
   reloadTerms: () => Promise<void>;
   reloadCurrentUsers: () => void;
 }) {
@@ -63,6 +65,7 @@ export default function TermDetails({
         <TermApplicationsTab
           term={term}
           termUsers={termUsers}
+          setTermUsers={setTermUsers}
           reloadUsers={reloadUsers}
         />
       )}

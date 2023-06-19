@@ -185,6 +185,7 @@ export default function TermInfo({
             <TermDetails
               term={term}
               termUsers={termUsers}
+              setTermUsers={setTermUsers}
               reloadTerms={reloadTerms}
               reloadCurrentUsers={handleGetTermUsers}
             />
