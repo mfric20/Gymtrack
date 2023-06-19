@@ -75,6 +75,7 @@ export default function WorkerApplicationInfo({
         console.log(`Došlo je do pogreške! | Poruka: ${error}`);
       });
   };
+
   return (
     <div className="border-2 rounded-md border-slate-300 shadow-lg border-opacity-40 p-3 flex flex-row justify-between px-[2%]">
       <div className="flex flex-row space-x-4">
