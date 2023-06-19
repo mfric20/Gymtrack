@@ -55,8 +55,9 @@ export default function TermInfo({
         },
       })
       .then((res) => {
+        if (res.data.message == "Termin je pun!") console.log(res.data.message);
+        else loadCurrentTerms();
         modalApply.onClose();
-        loadCurrentTerms();
       })
       .catch((error) => {
         console.log(`Došlo je do pogreške! | Poruka: ${error}`);
@@ -138,9 +139,15 @@ export default function TermInfo({
           </div>
         ) : (
           <div className="my-2">
-            <label className="text-white text-sm mr-5">
-              Pritisnite za prijavu na termin!
-            </label>
+            {term?._count.korisnik_termin >= term?.maksimalan_broj ? (
+              <label className="text-red-500 text-sm mr-5">
+                Termin je popunjen!
+              </label>
+            ) : (
+              <label className="text-white text-sm mr-5">
+                Pritisnite za prijavu na termin!
+              </label>
+            )}
           </div>
         )}
         {term?.korisnik_termin?.length > 0 ? (
@@ -155,6 +162,7 @@ export default function TermInfo({
           <button
             className="p-2 px-6 bg-green-600 disabled:bg-slate-500 text-white rounded-md shadow-md hover:bg-green-700 font-semibold flex flex-row space-x-1 items-center"
             onClick={modalApply.onOpen}
+            disabled={term?._count.korisnik_termin >= term?.maksimalan_broj}
           >
             <ArrowLeftCircleIcon className="w-6" />
             <h2>Prijava</h2>

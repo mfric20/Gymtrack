@@ -100,6 +100,7 @@ export default function WorkerTerm() {
         )
         .then((res) => {
           onClose();
+          loadCurrentTerms();
         })
         .catch((error) => {
           console.log(`Došlo je do pogreške! | Poruka: ${error}`);

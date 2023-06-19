@@ -73,6 +73,24 @@ export default async function handler(
         console.info("API zahtjev za prijavu na termin!");
         const { termId } = req.body.data;
 
+        const maxNumber = await prisma.termin.findFirst({
+          select: {
+            maksimalan_broj: true,
+          },
+          where: {
+            id: termId,
+          },
+        });
+
+        const currentNumber = await prisma.korisnik_termin.count({
+          where: {
+            termin_id: termId,
+          },
+        });
+
+        if (maxNumber.maksimalan_broj <= currentNumber)
+          return res.status(200).json({ message: "Termin je pun!" });
+
         const newApplication = await prisma.korisnik_termin.create({
           data: {
             korisnik_id: session.user.id,

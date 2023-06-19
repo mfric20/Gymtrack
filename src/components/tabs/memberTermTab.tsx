@@ -12,7 +12,6 @@ import { korisnik, korisnik_termin, termin } from "@prisma/client";
 
 export default function MemberTerm() {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
-  //Terms
   const [terms, setTerms] = useState<
     Array<
       termin & { korisnik: korisnik } & {

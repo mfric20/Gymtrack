@@ -3,6 +3,7 @@ import {
   ListBulletIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
+  MagnifyingGlassIcon,
   PlusIcon,
 } from "@heroicons/react/24/solid";
 import "react-datepicker/dist/react-datepicker.css";
@@ -129,6 +130,20 @@ export default function OwnerTerm() {
       });
   };
 
+  const filterTerms = (e) => {
+    let input = e.target.value.toString().toLocaleLowerCase();
+    if (input == "") loadCurrentTerms();
+
+    let filteredTerms = terms.filter((term) => {
+      return (
+        term.korisnik.ime.toLocaleLowerCase().includes(input) ||
+        term.korisnik.prezime.toLocaleLowerCase().includes(input)
+      );
+    });
+
+    setTerms(filteredTerms);
+  };
+
   return (
     <div className="flex flex-col my-5 space-y-4">
       <div className="flex flex-col space-y-1">
@@ -179,7 +194,19 @@ export default function OwnerTerm() {
           </button>
         </div>
         <hr className="opacity-20" />
+        <div className="flex flex-row space-x-2 items-center mr-4 justify-end">
+          <MagnifyingGlassIcon className="w-6 fill-white" />
+          <input
+            type="text"
+            name="nameSample"
+            id="nameSample"
+            placeholder="Ime ili prezime djelatnika..."
+            className="rounded-lg p-1 pl-2 bg-slate-100 w-52 text-black"
+            onChange={filterTerms}
+          />
+        </div>
       </div>
+
       <Modal onClose={onClose} size="lg" isOpen={isOpen}>
         <ModalOverlay />
         <ModalContent backgroundColor="#1F2937">
