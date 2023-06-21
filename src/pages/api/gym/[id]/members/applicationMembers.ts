@@ -63,7 +63,6 @@ export default async function handler(
         );
         const { id } = req.query;
         const { userId } = req.body;
-        console.log(req.body);
 
         if (id) {
           const dbResponse = await prisma.korisnik_teretana.update({

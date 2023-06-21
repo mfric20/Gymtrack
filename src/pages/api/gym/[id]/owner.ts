@@ -67,9 +67,6 @@ export default async function handler(
         const { naziv, adresa, slika } = req.body;
         const gymId = v4();
 
-        console.log(id);
-        console.log(gymId);
-
         const [teretana, kor_ter] = await prisma.$transaction([
           prisma.teretana.create({
             data: {

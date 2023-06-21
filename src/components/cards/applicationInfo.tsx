@@ -54,6 +54,7 @@ export default function ApplicationInfo({
         console.log(`Došlo je do pogreške! | Poruka: ${error}`);
       });
   };
+
   const handleDeclineClick = async () => {
     const id = router.query.id;
     await axios

@@ -47,7 +47,7 @@ export default async function handler(
         ...mailOptions,
         to: email,
         subject: "Aktivacijski kod",
-        text: "This is test string",
+        text: "Aktivacijski kod",
         html: `<h1>Aktivacijski kod </h2> <p style="font-size:18px;font-weight:normal">Hvala Vam na registraciji, kako bi nastavili sa prijavom Vaš aktivacijski kod je: ${activationCode}. </p>`,
       });
 
