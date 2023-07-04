@@ -6,6 +6,7 @@ import { authOptions } from "../auth/[...nextauth]";
 
 type Data = {
   error?: string;
+  message?: string;
   teretane?: string;
   id?: number;
 };
@@ -96,6 +97,31 @@ export default async function handler(
       );
       return res.status(400).json({
         error: `Greška kod API zahtjeva za dohvaćanje teretane  | Poruka ${error}`,
+      });
+    }
+  } else if (req.method === "DELETE") {
+    try {
+      if (session) {
+        console.log("API zahtjev za brisanje teretane!");
+        console.log(req.query);
+        const { gymId } = req.query;
+
+        const deleted = await prisma.teretana.delete({
+          where: {
+            id: gymId as string,
+          },
+        });
+
+        return res.status(200).json({ message: "Uspješno!" });
+      } else {
+        return res.status(401).json({ error: "Nema sesije!" });
+      }
+    } catch (error) {
+      console.error(
+        `Greška kod API zahtjeva za kreiranje teretane | Poruka ${error}`
+      );
+      return res.status(400).json({
+        error: `Greška kod API zahtjeva za kreiranje teretane  | Poruka ${error}`,
       });
     }
   }
